@@ -1,5 +1,7 @@
 # Free-Host
 
+
+
 # 1. Wayne | Free Host
 他提供多種伺服器語言任你選擇，還有最棒的24h服務
 讓您的Discord機器人有24h為人人服務的權利 !
@@ -22,8 +24,8 @@ DISK : 1GB
 4. 在Discord的註冊區域點註冊
 5. 您的專屬伺服器就這樣誕生拉~
 
-服務條款 : https://wayne227304.qzz.io/www
-官網 : https://wayne227304.qzz.io/
+服務條款 : https://wayne227304.qzz.io/
+Discord : https://discord.gg/drMFgPb6QJ
 快去註冊吧
 
 # 2.Hidencloud.com
@@ -69,3 +71,5 @@ FreeServer v3 是由一群熱愛技術的學生所創立和維護的專案。我
 1前往 dash.freeserver.tw 註冊
 2開始使用!
 關於更多詳細的教學，可以在 docs.freeserver.tw 中查看
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
