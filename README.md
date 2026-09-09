@@ -71,5 +71,3 @@ FreeServer v3 是由一群熱愛技術的學生所創立和維護的專案。我
 1前往 dash.freeserver.tw 註冊
 2開始使用!
 關於更多詳細的教學，可以在 docs.freeserver.tw 中查看
-
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
