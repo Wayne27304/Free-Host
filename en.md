@@ -1,79 +1,148 @@
-# Free-Host
 
-# 1. Wayne | Free Host
-It offers multiple server languages ​​to choose from, and the best 24/7 service
 
-Give your Discord bot the right to serve everyone 24/7! Completely free and provides equal resources!
+# Free-Hosting
 
-CPU: 25%
-RAM: 512MB
-DISK: 1GB
+## 1. Wayne | Free Host
 
-Simple and easy to use
-Uses the most popular Pterodactyl panel on the market, simple and easy to use!
-Multiple nodes
-Provides multiple node options to ensure stable and fast service, with different locations!
-24/7 operation
-Except for necessary maintenance, the server remains online 24/7.
+Offers a variety of server languages to choose from, along with top-notch 24/7 service to give your Discord bot the power to serve people around the clock!
+Completely free, with equal resources provided!
 
-How to apply?
-1. Visit the official website.
-2. Go to Discord.
-3. Read the Terms of Service carefully.
-4. Register in the registration area on Discord.
-5. Your dedicated server is now ready!
+* **CPU:** 25%
+* **RAM:** 512MB
+* **DISK:** 1GB
 
-Terms of Service: https://wayne227304.qzz.io/www
-Official Website: https://wayne227304.qzz.io/ Register now!
+### Simple and Easy to Use
 
-# 2. Hidencloud.com Supports over 19 popular games. Flexible pricing plans suitable for teams of all sizes.
-Game Servers | Web Hosting | VPS | Flex | Bots | Software | Free | Other Services Available to everyone! Enjoy unlimited gaming experiences. Deploy powerful game servers instantly with unparalleled stability and extremely low latency.
-DDoS Protection (under 60 seconds) Install Now
-Official Website: https://www.hidencloud.com/ Panel: https://freepanel.hidencloud.com/
+Uses the industry's most popular Pterodactyl panel, making it simple and user-friendly!
 
-# 3. NyankoHost
+### Multiple Nodes
 
-We believe every promising robot and developer deserves a warm home and ample room for growth.
-We carefully review every application, providing your project with suitable resources and a stable environment,
-so you are not bound by the strict limitations and congested servers of typical free hosting.
+Provides a choice of multiple nodes to ensure stable and fast service, with different locations available!
 
-✨ Here, you can get:
-🐾 Flexible resource allocation, adjusted according to project needs
-⚡ Stable and low-latency servers, supporting multiple development environments
-📦 Optional database service (MySQL) to store service-related data
+### 24/7 Operation
 
-💌 Application Process
-Apply to become a full member
-Fill out the project application form
-We will allocate the most suitable resources according to your needs
-Let your robot grow safely here
+Servers stay online and running year-round, except for essential maintenance.
 
-🔗 Join "NyankoHost" now to learn more — Your robot's new home is waiting for you~
+### How to Apply?
 
-[Click to join~](https://dctw.xyz/servers/1404587685645123665)
+1. Visit the official website
+2. Join the Discord
+3. Read the Terms of Service carefully
+4. Click "Register" in the registration channel on Discord
+5. Your very own dedicated server is born!
 
-4. freeserver v3 (Minecraft)
-24/7 free Minecraft server! And Python and more!
+* **Terms of Service:** [https://wayne227304.qzz.io/](https://wayne227304.qzz.io/?utm_source=gemini)
+* **Discord:** [https://discord.gg/drMFgPb6QJ](https://discord.gg/drMFgPb6QJ?utm_source=gemini)
+Go register now!
 
-FreeServer v3 is a project founded and maintained by a group of students who love technology. Our goal is to provide developers and enthusiasts with free, high-quality server hosting services.
+---
 
-We have nodes in the Fanghongding data center in Taiwan and the Mega Gateway data center in Hong Kong, using high-performance EPYC 7002 / Intel Xeon Gold CPUs to provide stable service.
+## 2. Hidencloud.com
 
-Our Services
+Supports over 19 popular games.
+Flexible pricing plans suitable for teams of all sizes.
+Game servers, web hosting, VPS, Flex, bots, software, free tier, and other services—available to everyone!
+Enjoy an unlimited gaming experience. Instantly deploy powerful game servers with unbeatable stability and ultra-low latency.
 
-Multiple Server Types
-We offer free Minecraft game server hosting, Discord bots, web hosting, and other server types.
+* DDoS Protection (under 60 seconds)
+* Instant Setup
+* **Official Website:** [https://www.hidencloud.com/](https://www.hidencloud.com/?utm_source=gemini)
+* **Panel:** [https://freepanel.hidencloud.com/](https://freepanel.hidencloud.com/?utm_source=gemini)
 
-Multi-Language Support
-We support multiple programming languages ​​including Python, JavaScript, Java, and Go.
+---
 
-Community Support
-An active Discord community providing technical support and communication.
+## 3. NyankoHost
 
-How to Use
+We believe every potential bot and developer deserves a warm home and sufficient room to grow.
+We carefully review each application to provide your project with suitable resources and a stable environment, sparing you from the strict limitations and crowded servers of typical free hosts.
 
-1. Register at dash.freeserver.tw
+### ✨ What You Can Get Here:
 
-2. Get started! For more detailed instructions, please visit docs.freeserver.tw.
+* 🐾 **Flexible resource allocation**, adjusted according to project needs
+* ⚡ **Stable and low-latency servers**, supporting multiple development environments
+* 📦 **Optional database service (MySQL)** to store project-related data
 
-   by Google 翻譯
+### 💌 Application Process:
+
+1. Apply to become an official member
+2. Fill out the project application form
+3. We will allocate the most suitable resources based on your needs
+
+🔗 **Join "NyankoHost" now to learn more** — your bot's new home is waiting for you~
+[Click here to join~](https://dctw.xyz/servers/1404587685645123665?utm_source=gemini)
+
+---
+
+## 4. FreeServer v3 (Minecraft)
+
+24/7 free Minecraft servers, Python hosting, and more!
+FreeServer v3 is a project founded and maintained by a group of tech-enthusiast students. Our goal is to provide free, high-quality server hosting services for developers and enthusiasts.
+We have nodes set up at the Chief Telecom Hongding Data Center in Taiwan and the Mega Gateway Data Center in Hong Kong, utilizing high-performance EPYC 7002 / Intel Xeon Gold CPUs to deliver stable service.
+
+### Our Services:
+
+* **Multiple Server Types:** Free Minecraft game server hosting, Discord bots, web hosting, and more.
+* **Multi-Language Support:** Supports Python, JavaScript, Java, Go, and various other programming languages.
+* **Community Support:** An active Discord community offering technical support and communication at any time.
+
+### How to Use:
+
+1. Go to `dash.freeserver.tw` to register
+2. Start using!
+
+For more detailed tutorials, check out `docs.freeserver.tw`.
+
+---
+
+## NothingHost
+
+NothingHost is a free hosting platform built specifically for developers.
+We want to make it easy for everyone to deploy projects without being limited by hosting costs.
+
+* **Official Website:** [https://nothingh.com](https://nothingh.com?utm_source=gemini)
+* **Official Discord:** [https://discord.gg/vqkm6kdBcX](https://discord.gg/vqkm6kdBcX?utm_source=gemini)
+
+---
+
+### We Provide Support for Multiple Mainstream Development Languages and Runtimes:
+
+> * **Bun**
+> * **C#**
+> * **Dart**
+> * **Deno**
+> * **Elixir**
+> * **Golang**
+> * **Java**
+> * **Luvit**
+> * **Node.js**
+> * **Nodemon**
+> * **Python**
+> * **Rust**
+> 
+> 
+
+### We Also Offer:
+
+* **Code-Server** (Online VS Code development environment)
+* **Gitea** (Self-hosted Git service)
+* **US Lavalink nodes**
+
+---
+
+### Ideal For:
+
+* Discord bot developers
+* Web backend developers
+* Student capstone projects
+* Personal side projects
+* Anyone looking to practice deployment and operations
+
+---
+
+### Why Choose NothingHost:
+
+* Free to use
+* Multi-language support
+* Developer-friendly
+* Low-latency Taiwan nodes
+* Real-time support via Discord community
