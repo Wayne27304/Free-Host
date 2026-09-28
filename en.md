@@ -2,6 +2,9 @@
 
 # Free-Hosting
 
+[繁體中文](https://github.com/Wayne27304/Free-Host/)  | [English](https://github.com/Wayne27304/Free-Host/blob/main/en.md)
+
+
 ## 1. Wayne | Free Host
 
 Offers a variety of server languages to choose from, along with top-notch 24/7 service to give your Discord bot the power to serve people around the clock!
