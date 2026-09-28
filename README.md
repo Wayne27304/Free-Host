@@ -1,6 +1,6 @@
 # Free-Host
 
-
+[繁體中文](https://github.com/Wayne27304/Free-Host/)  [English](https://github.com/Wayne27304/Free-Host/blob/main/en.md)
 
 # 1. Wayne | Free Host
 他提供多種伺服器語言任你選擇，還有最棒的24h服務
