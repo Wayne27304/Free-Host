@@ -71,3 +71,55 @@ FreeServer v3 是由一群熱愛技術的學生所創立和維護的專案。我
 1前往 dash.freeserver.tw 註冊
 2開始使用!
 關於更多詳細的教學，可以在 docs.freeserver.tw 中查看
+
+# NothingHost
+
+NothingHost 是一個專為開發者打造的免費托管平台。
+我們希望讓每個人都能輕鬆部署專案，不被主機費用限制。
+
+官方網站：https://nothingh.com
+官方 Discord：https://discord.gg/vqkm6kdBcX
+
+⸻
+
+我們提供
+
+支援多種主流開發語言與執行環境：
+
+> **Bun**
+> **C#**
+> **Dart**
+> **Deno**
+> **Elixir**
+> **Golang**
+> **Java**
+> **Luvit**
+> **Node.js**
+> **Nodemon**
+> **Python**
+> **Rust**
+
+同時也提供：
+    •    Code-Server（線上 VS Code 開發環境）
+    •    Gitea（自架 Git 服務）
+    •    美國 Lavalink 節點
+
+⸻
+
+適合對象
+    •    Discord 機器人開發者
+    •    Web 後端開發者
+    •    學生專題
+    •    個人 Side Project
+    •    想練習部署與維運的人
+
+⸻
+
+為什麼選擇 NothingHost
+    •    免費使用
+    •    多語言支援
+    •    開發者友善
+    •    台灣節點低延遲
+    •    Discord 社群即時支援
+
+⸻
