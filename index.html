@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wayne Free Host｜服務條款</title>
+    <link rel="icon" href="https://i.ibb.co/S76K6yfv/8f4e5152e26648eabb377349e089a550.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --text: #202124;
+            --muted: #5f6368;
+            --border: #dadce0;
+            --primary: #1a73e8;
+            --primary-hover: #1765cc;
+            --container: #e8f0fe;
+            --on-container: #174ea6;
+            --code-bg: #f1f3f4;
+            --code-text: #c5221f;
+            --shadow: 0 1px 2px rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+            --font: "Google Sans", "Roboto", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+        }
+
+        html[data-theme="dark"] {
+            --bg: #202124;
+            --surface: #292a2d;
+            --text: #e8eaed;
+            --muted: #9aa0a6;
+            --border: #3c4043;
+            --primary: #8ab4f8;
+            --primary-hover: #aecbfa;
+            --container: #394457;
+            --on-container: #d2e3fc;
+            --code-bg: #35363a;
+            --code-text: #f28b82;
+            --shadow: 0 1px 2px rgba(0,0,0,.6), 0 1px 3px 1px rgba(0,0,0,.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 16px;
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            transition: background .2s, color .2s;
+        }
+
+        /* ---------- Top app bar ---------- */
+        #site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 64px;
+            padding: 0 max(16px, calc((100% - 1200px) / 2));
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+        #site-nav .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-right: auto;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 0;
+        }
+        #site-nav .brand img { width: 32px; height: 32px; object-fit: contain; }
+        #site-nav .brand .brand-sub { color: var(--muted); }
+
+        #site-nav a.nav-link {
+            position: relative;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: background .15s, color .15s;
+        }
+        #site-nav a.nav-link:hover { background: var(--code-bg); color: var(--text); }
+        #site-nav a.nav-link.active { color: var(--primary); background: var(--container); }
+
+        #site-controls { display: flex; gap: 8px; margin-left: 8px; }
+        #site-controls button {
+            height: 36px;
+            padding: 0 16px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--primary);
+            font: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: background .15s, border-color .15s;
+        }
+        #site-controls button:hover { background: var(--container); border-color: transparent; }
+        #site-controls button:focus-visible,
+        #site-nav a:focus-visible,
+        #toc a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+        /* ---------- Page layout ---------- */
+        .page {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 16px 80px;
+        }
+
+        #toc { position: sticky; top: 96px; align-self: start; }
+        #toc .toc-title {
+            margin: 0 0 8px 16px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        #toc a {
+            display: block;
+            padding: 6px 16px;
+            margin-right: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 14px;
+            line-height: 1.5;
+            border-radius: 0 20px 20px 0;
+            transition: background .15s, color .15s;
+        }
+        #toc a:hover { background: var(--code-bg); color: var(--text); }
+        #toc a.active { background: var(--container); color: var(--on-container); font-weight: 500; }
+
+        /* ---------- Hero ---------- */
+        .doc-header {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+            padding: 40px 40px 32px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+        .doc-header::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4285f4 0 25%, #ea4335 25% 50%, #fbbc04 50% 75%, #34a853 75% 100%);
+        }
+        .doc-kicker {
+            margin: 0 0 12px;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .1em;
+        }
+        .doc-header h1 {
+            margin: 0;
+            font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+            font-weight: 400;
+            line-height: 1.3;
+            letter-spacing: -.01em;
+        }
+        .doc-date {
+            display: inline-flex;
+            align-items: center;
+            margin: 20px 0 0;
+            padding: 4px 14px;
+            background: var(--code-bg);
+            color: var(--muted);
+            font-size: 13px;
+            border-radius: 16px;
+        }
+        .doc-date strong { margin-right: 4px; font-weight: 500; color: var(--text); }
+        .doc-header blockquote {
+            margin: 24px 0 0;
+            padding: 16px 20px;
+            background: var(--container);
+            color: var(--on-container);
+            border: 0;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+        .doc-header blockquote p { margin: 0; }
+
+        /* ---------- Section cards ---------- */
+        section.card {
+            scroll-margin-top: 88px;
+            margin-bottom: 16px;
+            padding: 28px 32px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+        section.card h2 {
+            margin: 0 0 4px;
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+        section.card:nth-of-type(4n+1) h2 { color: #1a73e8; }
+        section.card:nth-of-type(4n+2) h2 { color: #d93025; }
+        section.card:nth-of-type(4n+3) h2 { color: #e37400; }
+        section.card:nth-of-type(4n+4) h2 { color: #188038; }
+        html[data-theme="dark"] section.card:nth-of-type(4n+1) h2 { color: #8ab4f8; }
+        html[data-theme="dark"] section.card:nth-of-type(4n+2) h2 { color: #f28b82; }
+        html[data-theme="dark"] section.card:nth-of-type(4n+3) h2 { color: #fdd663; }
+        html[data-theme="dark"] section.card:nth-of-type(4n+4) h2 { color: #81c995; }
+
+        section.card > p { margin: 0 0 12px; color: var(--muted); font-size: 15px; }
+        section.card ul { margin: 0 0 12px; padding: 0; list-style: none; }
+        section.card li {
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+            font-size: 15px;
+            color: var(--muted);
+        }
+        section.card li > strong:first-child {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 500;
+        }
+        section.card li strong { color: var(--text); font-weight: 500; }
+
+        section.card ul.plain li {
+            position: relative;
+            padding-left: 22px;
+            color: var(--text);
+        }
+        section.card ul.plain li::before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 25px;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        code {
+            padding: 2px 6px;
+            background: var(--code-bg);
+            color: var(--code-text);
+            font-family: "Roboto Mono", ui-monospace, monospace;
+            font-size: .88em;
+            border-radius: 4px;
+        }
+
+        footer.site-footer {
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .page { grid-template-columns: minmax(0, 1fr); padding-top: 16px; }
+            #toc { display: none; }
+        }
+        @media (max-width: 600px) {
+            #site-nav { height: auto; min-height: 56px; flex-wrap: wrap; padding: 8px 12px; }
+            #site-nav .brand { width: 100%; font-size: 19px; }
+            #site-controls { margin-left: auto; }
+            .doc-header { padding: 32px 22px 24px; }
+            section.card { padding: 22px 20px 10px; }
+            section.card h2 { font-size: 19px; }
+        }
+    </style>
+</head>
+<body>
+    <nav id="site-nav">
+        <a class="brand" href="index.html">
+            <img src="https://i.ibb.co/S76K6yfv/8f4e5152e26648eabb377349e089a550.png" alt="Logo">
+            <span>Wayne Free Host</span>
+        </a>
+        <a class="nav-link active" href="index.html"><span data-i18n="nav-terms">服務條款</span></a>
+        <a class="nav-link" href="6767.html"><span data-i18n="nav-panel">面板</span></a>
+        <div id="site-controls">
+            <button id="theme-toggle" type="button">切換深色</button>
+            <button id="lang-toggle" type="button">EN</button>
+        </div>
+    </nav>
+
+    <div class="page">
+        <aside id="toc" aria-label="Contents">
+            <p class="toc-title" data-i18n="toc-title">目錄</p>
+            <a href="#s1" data-i18n="sec-1-title">1. 先講好：這是免費的</a>
+            <a href="#s2" data-i18n="sec-2-title">2. 帳號跟安全管理</a>
+            <a href="#s3" data-i18n="sec-3-title">3. 伺服器能開多少？規格是多少？</a>
+            <a href="#s4" data-i18n="sec-4-title">4. 絕對不能做的事（黑名單）</a>
+            <a href="#s5" data-i18n="sec-5-title">5. 伺服器閒置與回收規則</a>
+            <a href="#s6" data-i18n="sec-6-title">6. 資料安全與賠償</a>
+            <a href="#s7" data-i18n="sec-7-title">7. 違規會怎樣？</a>
+            <a href="#s8" data-i18n="sec-8-title">8. 最後的碎碎念</a>
+        </aside>
+
+        <main id="doc">
+            <header class="doc-header">
+                <p class="doc-kicker" data-i18n="doc-kicker">WAYNE FREE HOST / 服務條款</p>
+                <h1 data-i18n="doc-title">Wayne Free Host 服務條款</h1>
+                <p class="doc-date"><strong data-i18n="update-date-label">更新日期</strong><span data-i18n="update-date-val">：2026 年 10 月 7 日</span></p>
+                <blockquote>
+                    <p data-i18n="intro-quote">哈囉！歡迎來到 Wayne Free Host。既然是免費的主機服務，有些醜話還是得先講在前面。只要你註冊跟開了伺服器，就代表你同意底下這些規定。如果看了覺得無法接受，那可能這裏就不太適合你啦～</p>
+                </blockquote>
+            </header>
+
+            <section class="card" id="s1">
+                <h2 data-i18n="sec-1-title">1. 先講好：這是免費的</h2>
+                <p data-i18n="sec-1-desc">這裏所有的資源都是完全免費提供的，所以別要求太多 24 小時專人客服：</p>
+                <ul>
+                    <li><strong data-i18n="sec-1-1-title">1.1 隨時可能調整：</strong><span data-i18n="sec-1-1-desc">因為是免費的，主機要維護、要重組、或者哪天想收掉，管理員（Wayne）都有權利直接改動或關閉服務，不用特別提前通知你。</span></li>
+                    <li><strong data-i18n="sec-1-2-title">1.2 沒有保證在線：</strong><span data-i18n="sec-1-2-desc">我們不保證 24/7 永不掛點。社群 Discord 大家的幫忙都是互相的，別把免費主機當成企業級 SLA 級別來要求喔。</span></li>
+                    <li><strong data-i18n="sec-1-3-title">1.3 維護與不可抗力：</strong><span data-i18n="sec-1-3-desc">主機偶爾需要停機維護，我們會盡量事先通知，並努力在預定時間內完成。因維護、停電、網路中斷、天災或其他我們無法控制的狀況造成的服務中斷或資料損失，我們不負責任。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s2">
+                <h2 data-i18n="sec-2-title">2. 帳號跟安全管理</h2>
+                <p data-i18n="sec-2-desc">為了公平起見，帳號跟資安有一些基本要求：</p>
+                <ul>
+                    <li><strong data-i18n="sec-2-1-title">2.1 一人一個帳號就好：</strong><span data-i18n="sec-2-1-desc">拜託不要辦一堆小號來洗伺服器資源。抓到開小號多開的，直接全部一起永久封鎖。</span></li>
+                    <li><strong data-i18n="sec-2-2-title">2.2 密碼自己顧好：</strong><span data-i18n="sec-2-2-desc">帳號密碼請自己妥善保管，用你帳號幹了什麼壞事，責任就是算在你的頭上。</span></li>
+                    <li><strong data-i18n="sec-2-3-title">2.3 連續輸錯三次就封 IP：</strong><span data-i18n="sec-2-3-desc">主機有自動防護，VPS 連續三次密碼打錯來源 IP 就會被系統直接封鎖。如果不小心把自己鎖在外面的話，再來找管理員解封。</span></li>
+                    <li><strong data-i18n="sec-2-4-title">2.4 不得轉讓或轉售：</strong><span data-i18n="sec-2-4-desc">未經管理員同意，不得把你的帳號或伺服器轉讓、出租、轉售或分享給其他人使用。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s3">
+                <h2 data-i18n="sec-3-title">3. 伺服器能開多少？規格是多少？</h2>
+                <p data-i18n="sec-3-desc">資源有限，大家互相體諒不要把主機榨乾：</p>
+                <ul>
+                    <li><strong data-i18n="sec-3-1-title">3.1 數量限制：</strong><span data-i18n="sec-3-1-desc">普通用戶最多只能同時開 <strong>5 台</strong> 伺服器；管理員權限最多 <strong>10 台</strong>。</span></li>
+                    <li><strong data-i18n="sec-3-2-title">3.2 效能配額：</strong><span data-i18n="sec-3-2-desc">普通用戶每台伺服器上限就是 CPU <strong>20%</strong>、RAM <strong>512MB</strong>。管理員則是不限制。</span></li>
+                    <li><strong data-i18n="sec-3-3-title">3.3 別讓 CPU 長時間飆高：</strong><span data-i18n="sec-3-3-desc">不要讓主機 CPU 一小時內長時間維持在 80% 以上，太誇張會直接被系統降級或強制關機。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s4">
+                <h2 data-i18n="sec-4-title">4. 絕對不能做的事（黑名單）</h2>
+                <p data-i18n="sec-4-desc">免費歸免費，但有些東西踩下去就是直接掰掰：</p>
+                <ul>
+                    <li><strong data-i18n="sec-4-1-title">4.1 嚴禁挖礦：</strong><span data-i18n="sec-4-1-desc">絕對不准跑任何加密貨幣挖礦程式（像 XMRig 這種）。被系統抓到直接秒封帳號，沒得商量。</span></li>
+                    <li><strong data-i18n="sec-4-2-title">4.2 惡意攻擊與爬蟲：</strong><span data-i18n="sec-4-2-desc">禁止拿這裡的主機去發動 DDoS、網路掃描、炸群、或是搞高頻率惡意爬蟲。</span></li>
+                    <li><strong data-i18n="sec-4-3-title">4.3 病毒跟木馬：</strong><span data-i18n="sec-4-3-desc">不准放木馬、病毒、勒索軟體或任何怪力亂神的遠端控管後門。</span></li>
+                    <li><strong data-i18n="sec-4-4-title">4.4 嚴禁私自搞高風險內網穿透（重點）：</strong><span data-i18n="sec-4-4-desc">為了安全起見，容器內<strong>嚴禁</strong>私自架設像 <code>sshx</code>、<code>tmate</code>、或是未授權的 <code>ngrok</code> / <code>cloudflared</code> 等高風險隧道工具。抓到直接停用伺服器。</span></li>
+                    <li><strong data-i18n="sec-4-5-title">4.5 禁止下載或安裝作業系統：</strong><span data-i18n="sec-4-5-desc">禁止在容器內下載、安裝或執行完整的 Linux、Windows 或其他作業系統映像、ISO、rootfs，或利用容器建立巢狀虛擬機或容器。一般應用程式所需的套件下載不在此限。</span></li>
+                    <li><strong data-i18n="sec-4-6-title">4.6 色情與違法內容：</strong><span data-i18n="sec-4-6-desc">禁止任何色情內容（含 AI 生成色情、成人網站等）或違法東西。</span></li>
+                    <li><strong data-i18n="sec-4-7-title">4.7 濫用儲存與頻寬：</strong><span data-i18n="sec-4-7-desc">禁止把服務用作公開檔案分享、盜版散布、代理轉發、大量下載站或其他會長時間大量消耗儲存空間與頻寬的用途。</span></li>
+                    <li><strong data-i18n="sec-4-8-title">4.8 未經授權的存取：</strong><span data-i18n="sec-4-8-desc">禁止嘗試登入、讀取、修改或破壞其他使用者、伺服器、面板或主機系統的資料與功能。</span></li>
+                    <li><strong data-i18n="sec-4-9-title">4.9 垃圾郵件與大量自動化請求：</strong><span data-i18n="sec-4-9-desc">禁止寄送垃圾郵件、批量建立帳號、灌水、騷擾訊息，或以程式持續發送會影響服務穩定性的高頻率請求。</span></li>
+                    <li><strong data-i18n="sec-4-10-title">4.10 禁止規避資源限制：</strong><span data-i18n="sec-4-10-desc">禁止透過多開帳號、程序偽裝、漏洞或其他方式規避伺服器數量、CPU、記憶體及頻寬等限制。</span></li>
+                    <li><strong data-i18n="sec-4-11-title">4.11 盜版、破解與 BT 下載：</strong><span data-i18n="sec-4-11-desc">禁止存放或散布盜版軟體、破解工具、ROM，也禁止使用 BitTorrent 等 P2P 工具下載或做種；提供這類內容連結或教學的網站同樣不行。</span></li>
+                    <li><strong data-i18n="sec-4-12-title">4.12 代理與 IRC：</strong><span data-i18n="sec-4-12-desc">禁止架設代理（Proxy）或 VPN 轉發節點，也禁止建立或連接 IRC 網路伺服器。第一次違規會停用伺服器，再犯直接終止帳號。</span></li>
+                    <li><strong data-i18n="sec-4-13-title">4.13 不實與誹謗內容：</strong><span data-i18n="sec-4-13-desc">禁止架設散布不實資訊，或誹謗、抹黑個人、團體、企業的網站與服務。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s5">
+                <h2 data-i18n="sec-5-title">5. 伺服器閒置與回收規則</h2>
+                <p data-i18n="sec-5-desc">請定期使用並維持伺服器狀態：</p>
+                <ul>
+                    <li><strong data-i18n="sec-5-1-title">5.1 建立後 7 天內無動作將刪除：</strong><span data-i18n="sec-5-1-desc">伺服器建立後，如果在 7 天內沒有開機、登入、部署或其他操作，管理員有權直接刪除該伺服器，且不接受任何資料取回或恢復要求。</span></li>
+                    <li><strong data-i18n="sec-5-2-title">5.2 超過 15 天未開機或操作將關閉：</strong><span data-i18n="sec-5-2-desc">伺服器若連續超過 15 天沒有開機或任何操作，管理員有權關閉該伺服器；如果伺服器目前已經開機運作，此條規則不生效。</span></li>
+                    <li><strong data-i18n="sec-5-3-title">5.3 資料要自己備份：</strong><span data-i18n="sec-5-3-desc">重要存檔（例如 Minecraft 世界檔案、網頁原始碼）請自己定時下載備份到電腦。伺服器被刪除、關閉或故障導致資料不見，我們不負賠償或恢復責任。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s6">
+                <h2 data-i18n="sec-6-title">6. 資料安全與賠償</h2>
+                <p data-i18n="sec-6-desc">關於賠償跟安全性：</p>
+                <ul>
+                    <li><strong data-i18n="sec-6-1-title">6.1 資料外洩風險自負：</strong><span data-i18n="sec-6-1-desc">這只是免費主機，沒有那種企業級的資料保護保證，你自己要做好心理準備。</span></li>
+                    <li><strong data-i18n="sec-6-2-title">6.2 關於被黑客攻擊的補償：</strong><span data-i18n="sec-6-2-desc">如果真的不幸被外部攻擊導致伺服器出事，我們頂多幫你盡力恢復一些虛擬內容（像是 Minecraft 建築存檔之類的）。</span></li>
+                    <li><strong data-i18n="sec-6-3-title">6.3 絕對不接受金錢索賠：</strong><span data-i18n="sec-6-3-desc">因為是<strong>免費服務</strong>，我們<strong>絕對不接受</strong>任何金錢、現金或營業損失形式的索賠要求。同意這點才能用我們的服務喔！</span></li>
+                    <li><strong data-i18n="sec-6-4-title">6.4 第三方服務：</strong><span data-i18n="sec-6-4-desc">伺服器可能需要使用第三方網路、網域、套件、API 或其他外部服務。第三方服務的可用性、費用、規則與資料處理方式由其服務提供者負責。</span></li>
+                    <li><strong data-i18n="sec-6-5-title">6.5 使用者內容與法律責任：</strong><span data-i18n="sec-6-5-desc">你必須確保上傳、發布或執行的內容不侵犯他人權利並符合適用法律；因你的內容或行為產生的爭議與責任，由你自行負責。</span></li>
+                    <li><strong data-i18n="sec-6-6-title">6.6 安全事件通報：</strong><span data-i18n="sec-6-6-desc">如果發現帳號遭盜用、資料外洩或其他安全問題，請儘快通知管理員並提供必要資訊，以便我們調查與處理。</span></li>
+                    <li><strong data-i18n="sec-6-7-title">6.7 違規造成的損失由你負責：</strong><span data-i18n="sec-6-7-desc">如果因為你違反本條款，導致 Wayne Free Host 或第三方受到損失、被索賠或產生法律費用，你必須負責賠償，並配合我們處理。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s7">
+                <h2 data-i18n="sec-7-title">7. 違規會怎樣？</h2>
+                <p data-i18n="sec-7-desc">如果你踩到底線，管理員就會動手：</p>
+                <ul class="plain">
+                    <li data-i18n="action-1">直接停用伺服器（會保留 24 小時讓你想辦法備份，逾期永久刪除）</li>
+                    <li data-i18n="action-2">限制或拔掉你的帳號權限</li>
+                    <li data-i18n="action-3">把違規的伺服器直接刪掉</li>
+                    <li data-i18n="action-4">永久註銷帳號並把你丟進黑名單</li>
+                </ul>
+                <ul class="plain">
+                    <li data-i18n="action-5">如果你認為處置有誤，可在收到通知後 7 天內聯絡管理員提出申訴</li>
+                    <li data-i18n="action-6">維護、資安事件或緊急狀況下，管理員可不經事前通知立即處理</li>
+                    <li data-i18n="action-7">調查違規或安全事件期間，管理員可暫時限制伺服器與帳號功能</li>
+                    <li data-i18n="action-8">處理爭議時，可參考面板、主機與網路服務所產生的系統紀錄</li>
+                    <li data-i18n="action-9">帳號遭終止後，不得以其他帳號或方式規避處分並重新使用服務</li>
+                    <li data-i18n="action-10">對管理員或工作人員惡意辱罵、騷擾或態度惡劣者，管理員可直接終止帳號</li>
+                    <li data-i18n="action-11">對管理員或本服務威脅提告者，帳號將直接終止；有爭議請先好好溝通</li>
+                </ul>
+                <p data-i18n="sec-9-footer">被處置時基本上都會透過 Discord 跟你說一聲。</p>
+            </section>
+
+            <section class="card" id="s8">
+                <h2 data-i18n="sec-8-title">8. 最後的碎碎念</h2>
+                <p data-i18n="sec-8-desc-1">這個條款隨時都可以改，如果我們更新了，繼續用就代表你接受新版本。</p>
+                <p data-i18n="sec-8-desc-2">好啦，看完就代表你同意啦！Wayne 保留所有條款的最終解釋權，祝大家玩得開心～</p>
+            </section>
+
+            <footer class="site-footer">© Wayne Free Host</footer>
+        </main>
+    </div>
+
+    <script>
+    (function(){
+     const translations = {
+         zh: {
+             "nav-terms": "服務條款",
+             "nav-panel": "面板",
+             "toc-title": "目錄",
+             "doc-kicker": "WAYNE FREE HOST / 服務條款",
+             "doc-title": "Wayne Free Host 服務條款",
+             "update-date-label": "更新日期",
+             "update-date-val": "：2026 年 10 月 7 日",
+             "intro-quote": "哈囉！歡迎來到 Wayne Free Host。既然是免費的主機服務，有些醜話還是得先講在前面。只要你註冊跟開了伺服器，就代表你同意底下這些規定。如果看了覺得無法接受，那可能這裏就不太適合你啦～",
+             "sec-1-title": "1. 先講好：這是免費的",
+             "sec-1-desc": "這裏所有的資源都是完全免費提供的，所以別要求太多 24 小時專人客服：",
+             "sec-1-1-title": "1.1 隨時可能調整：",
+             "sec-1-1-desc": "因為是免費的，主機要維護、要重組、或者哪天想收掉，管理員（Wayne）都有權利直接改動或關閉服務，不用特別提前通知你。",
+             "sec-1-2-title": "1.2 沒有保證在線：",
+             "sec-1-2-desc": "我們不保證 24/7 永不掛點。社群 Discord 大家的幫忙都是互相的，別把免費主機當成企業級 SLA 級別來要求喔。",
+             "sec-1-3-title": "1.3 維護與不可抗力：",
+             "sec-1-3-desc": "主機偶爾需要停機維護，我們會盡量事先通知，並努力在預定時間內完成。因維護、停電、網路中斷、天災或其他我們無法控制的狀況造成的服務中斷或資料損失，我們不負責任。",
+             "sec-2-title": "2. 帳號跟安全管理",
+             "sec-2-desc": "為了公平起見，帳號跟資安有一些基本要求：",
+             "sec-2-1-title": "2.1 一人一個帳號就好：",
+             "sec-2-1-desc": "拜託不要辦一堆小號來洗伺服器資源。抓到開小號多開的，直接全部一起永久封鎖。",
+             "sec-2-2-title": "2.2 密碼自己顧好：",
+             "sec-2-2-desc": "帳號密碼請自己妥善保管，用你帳號幹了什麼壞事，責任就是算在你的頭上。",
+             "sec-2-3-title": "2.3 連續輸錯三次就封 IP：",
+             "sec-2-3-desc": "主機有自動防護，VPS 連續三次密碼打錯來源 IP 就會被系統直接封鎖。如果不小心把自己鎖在外面的話，再來找管理員解封。",
+             "sec-2-4-title": "2.4 不得轉讓或轉售：",
+             "sec-2-4-desc": "未經管理員同意，不得把你的帳號或伺服器轉讓、出租、轉售或分享給其他人使用。",
+             "sec-3-title": "3. 伺服器能開多少？規格是多少？",
+             "sec-3-desc": "資源有限，大家互相體諒不要把主機榨乾：",
+             "sec-3-1-title": "3.1 數量限制：",
+             "sec-3-1-desc": "普通用戶最多只能同時開 <strong>5 台</strong> 伺服器；管理員權限最多 <strong>10 台</strong>。",
+             "sec-3-2-title": "3.2 效能配額：",
+             "sec-3-2-desc": "普通用戶每台伺服器上限就是 CPU <strong>20%</strong>、RAM <strong>512MB</strong>。管理員則是不限制。",
+             "sec-3-3-title": "3.3 別讓 CPU 長時間飆高：",
+             "sec-3-3-desc": "不要讓主機 CPU 一小時內長時間維持在 80% 以上，太誇張會直接被系統降級或強制關機。",
+             "sec-4-title": "4. 絕對不能做的事（黑名單）",
+             "sec-4-desc": "免費歸免費，但有些東西踩下去就是直接掰掰：",
+             "sec-4-1-title": "4.1 嚴禁挖礦：",
+             "sec-4-1-desc": "絕對不准跑任何加密貨幣挖礦程式（像 XMRig 這種）。被系統抓到直接秒封帳號，沒得商量。",
+             "sec-4-2-title": "4.2 惡意攻擊與爬蟲：",
+             "sec-4-2-desc": "禁止拿這裡的主機去發動 DDoS、網路掃描、炸群、或是搞高頻率惡意爬蟲。",
+             "sec-4-3-title": "4.3 病毒跟木馬：",
+             "sec-4-3-desc": "不准放木馬、病毒、勒索軟體或任何怪力亂神的遠端控管後門。",
+             "sec-4-4-title": "4.4 嚴禁私自搞高風險內網穿透（重點）：",
+             "sec-4-4-desc": "為了安全起見，容器內<strong>嚴禁</strong>私自架設像 <code>sshx</code>、<code>tmate</code>、或是未授權的 <code>ngrok</code> / <code>cloudflared</code> 等高風險隧道工具。抓到直接停用伺服器。",
+             "sec-4-5-title": "4.5 禁止下載或安裝作業系統：",
+             "sec-4-5-desc": "禁止在容器內下載、安裝或執行完整的 Linux、Windows 或其他作業系統映像、ISO、rootfs，或利用容器建立巢狀虛擬機或容器。一般應用程式所需的套件下載不在此限。",
+             "sec-4-6-title": "4.6 色情與違法內容：",
+             "sec-4-6-desc": "禁止任何色情內容（含 AI 生成色情、成人網站等）或違法東西。",
+             "sec-4-7-title": "4.7 濫用儲存與頻寬：",
+             "sec-4-7-desc": "禁止把服務用作公開檔案分享、盜版散布、代理轉發、大量下載站或其他會長時間大量消耗儲存空間與頻寬的用途。",
+             "sec-4-8-title": "4.8 未經授權的存取：",
+             "sec-4-8-desc": "禁止嘗試登入、讀取、修改或破壞其他使用者、伺服器、面板或主機系統的資料與功能。",
+             "sec-4-9-title": "4.9 垃圾郵件與大量自動化請求：",
+             "sec-4-9-desc": "禁止寄送垃圾郵件、批量建立帳號、灌水、騷擾訊息，或以程式持續發送會影響服務穩定性的高頻率請求。",
+             "sec-4-10-title": "4.10 禁止規避資源限制：",
+             "sec-4-10-desc": "禁止透過多開帳號、程序偽裝、漏洞或其他方式規避伺服器數量、CPU、記憶體及頻寬等限制。",
+             "sec-4-11-title": "4.11 盜版、破解與 BT 下載：",
+             "sec-4-11-desc": "禁止存放或散布盜版軟體、破解工具、ROM，也禁止使用 BitTorrent 等 P2P 工具下載或做種；提供這類內容連結或教學的網站同樣不行。",
+             "sec-4-12-title": "4.12 代理與 IRC：",
+             "sec-4-12-desc": "禁止架設代理（Proxy）或 VPN 轉發節點，也禁止建立或連接 IRC 網路伺服器。第一次違規會停用伺服器，再犯直接終止帳號。",
+             "sec-4-13-title": "4.13 不實與誹謗內容：",
+             "sec-4-13-desc": "禁止架設散布不實資訊，或誹謗、抹黑個人、團體、企業的網站與服務。",
+             "sec-5-title": "5. 伺服器閒置與回收規則",
+             "sec-5-desc": "請定期使用並維持伺服器狀態：",
+             "sec-5-1-title": "5.1 建立後 7 天內無動作將刪除：",
+             "sec-5-1-desc": "伺服器建立後，如果在 7 天內沒有開機、登入、部署或其他操作，管理員有權直接刪除該伺服器，且不接受任何資料取回或恢復要求。",
+             "sec-5-2-title": "5.2 超過 15 天未開機或操作將關閉：",
+             "sec-5-2-desc": "伺服器若連續超過 15 天沒有開機或任何操作，管理員有權關閉該伺服器；如果伺服器目前已經開機運作，此條規則不生效。",
+             "sec-5-3-title": "5.3 資料要自己備份：",
+             "sec-5-3-desc": "重要存檔（例如 Minecraft 世界檔案、網頁原始碼）請自己定時下載備份到電腦。伺服器被刪除、關閉或故障導致資料不見，我們不負賠償或恢復責任。",
+             "sec-6-title": "6. 資料安全與賠償",
+             "sec-6-desc": "關於賠償跟安全性：",
+             "sec-6-1-title": "6.1 資料外洩風險自負：",
+             "sec-6-1-desc": "這只是免費主機，沒有那種企業級的資料保護保證，你自己要做好心理準備。",
+             "sec-6-2-title": "6.2 關於被黑客攻擊的補償：",
+             "sec-6-2-desc": "如果真的不幸被外部攻擊導致伺服器出事，我們頂多幫你盡力恢復一些虛擬內容（像是 Minecraft 建築存檔之類的）。",
+             "sec-6-3-title": "6.3 絕對不接受金錢索賠：",
+             "sec-6-3-desc": "因為是<strong>免費服務</strong>，我們<strong>絕對不接受</strong>任何金錢、現金或營業損失形式的索賠要求。同意這點才能用我們的服務喔！",
+             "sec-6-4-title": "6.4 第三方服務：",
+             "sec-6-4-desc": "伺服器可能需要使用第三方網路、網域、套件、API 或其他外部服務。第三方服務的可用性、費用、規則與資料處理方式由其服務提供者負責。",
+             "sec-6-5-title": "6.5 使用者內容與法律責任：",
+             "sec-6-5-desc": "你必須確保上傳、發布或執行的內容不侵犯他人權利並符合適用法律；因你的內容或行為產生的爭議與責任，由你自行負責。",
+             "sec-6-6-title": "6.6 安全事件通報：",
+             "sec-6-6-desc": "如果發現帳號遭盜用、資料外洩或其他安全問題，請儘快通知管理員並提供必要資訊，以便我們調查與處理。",
+             "sec-6-7-title": "6.7 違規造成的損失由你負責：",
+             "sec-6-7-desc": "如果因為你違反本條款，導致 Wayne Free Host 或第三方受到損失、被索賠或產生法律費用，你必須負責賠償，並配合我們處理。",
+             "sec-7-title": "7. 違規會怎樣？",
+             "sec-7-desc": "如果你踩到底線，管理員就會動手：",
+             "action-1": "直接停用伺服器（會保留 24 小時讓你想辦法備份，逾期永久刪除）",
+             "action-2": "限制或拔掉你的帳號權限",
+             "action-3": "把違規的伺服器直接刪掉",
+             "action-4": "永久註銷帳號並把你丟進黑名單",
+             "action-5": "如果你認為處置有誤，可在收到通知後 7 天內聯絡管理員提出申訴",
+             "action-6": "維護、資安事件或緊急狀況下，管理員可不經事前通知立即處理",
+             "action-7": "調查違規或安全事件期間，管理員可暫時限制伺服器與帳號功能",
+             "action-8": "處理爭議時，可參考面板、主機與網路服務所產生的系統紀錄",
+             "action-9": "帳號遭終止後，不得以其他帳號或方式規避處分並重新使用服務",
+             "action-10": "對管理員或工作人員惡意辱罵、騷擾或態度惡劣者，管理員可直接終止帳號",
+             "action-11": "對管理員或本服務威脅提告者，帳號將直接終止；有爭議請先好好溝通",
+             "sec-9-footer": "被處置時基本上都會透過 Discord 跟你說一聲。",
+             "sec-8-title": "8. 最後的碎碎念",
+             "sec-8-desc-1": "這個條款隨時都可以改，如果我們更新了，繼續用就代表你接受新版本。",
+             "sec-8-desc-2": "好啦，看完就代表你同意啦！Wayne 保留所有條款的最終解釋權，祝大家玩得開心～",
+             "dark-btn": "切換深色",
+             "light-btn": "切換亮色"
+         },
+         en: {
+             "nav-terms": "Terms of Service",
+             "nav-panel": "Panel",
+             "toc-title": "Contents",
+             "doc-kicker": "WAYNE FREE HOST / TERMS",
+             "doc-title": "Wayne Free Host Terms of Service",
+             "update-date-label": "Last Updated",
+             "update-date-val": ": October 7, 2026",
+             "intro-quote": "Hey there! Welcome to Wayne Free Host. Since this is a free service, we need to clear a few things up. By registering and spinning up a server, you agree to these rules. If you aren't cool with this, maybe this isn't the right place for you~",
+             "sec-1-title": "1. First Things First: It's Free",
+             "sec-1-desc": "Everything here is completely free, so don't expect 24/7 dedicated support:",
+             "sec-1-1-title": "1.1 Subject to Change:",
+             "sec-1-1-desc": "Because it's free, the admin (Wayne) has the right to modify, restructure, or shut down the service anytime without prior notice.",
+             "sec-1-2-title": "1.2 No Uptime Guarantees:",
+             "sec-1-2-desc": "We don't guarantee 24/7 uptime. Discord help is community-driven, so don't treat this like an enterprise SLA.",
+             "sec-1-3-title": "1.3 Maintenance & Force Majeure:",
+             "sec-1-3-desc": "Servers occasionally need downtime for maintenance. We'll try to give notice and finish on schedule, but we are not liable for interruptions or data loss caused by maintenance, power or network outages, natural disasters, or other events beyond our control.",
+             "sec-2-title": "2. Accounts & Security",
+             "sec-2-desc": "To keep things fair, here are the basic ground rules for accounts:",
+             "sec-2-1-title": "2.1 One Account Per Person:",
+             "sec-2-1-desc": "Please don't make alt accounts to farm resources. If we catch you doing this, all associated accounts get permanently banned.",
+             "sec-2-2-title": "2.2 Secure Your Password:",
+             "sec-2-2-desc": "Keep your login info safe. Whatever happens under your account is your responsibility.",
+             "sec-2-3-title": "2.3 Three Strikes and Your IP is Blocked:",
+             "sec-2-3-desc": "Our VPS security automatically blocks source IPs after three consecutive incorrect password attempts. Hit up the admin if you lock yourself out.",
+             "sec-2-4-title": "2.4 No Transfer or Resale:",
+             "sec-2-4-desc": "Without the admin's approval, you may not transfer, rent out, resell, or share your account or servers with anyone else.",
+             "sec-3-title": "3. Limits & Quotas",
+             "sec-3-desc": "Resources are limited, so let's not nuke the machine:",
+             "sec-3-1-title": "3.1 Server Limits:",
+             "sec-3-1-desc": "Regular users can hold up to <strong>5 servers</strong>; admins can hold up to <strong>10</strong>.",
+             "sec-3-2-title": "3.2 Hardware Quotas:",
+             "sec-3-2-desc": "Regular instances are capped at <strong>20% CPU</strong> and <strong>512MB RAM</strong>. Admins have no limits.",
+             "sec-3-3-title": "3.3 Don't Max Out CPU Forever:",
+             "sec-3-3-desc": "Don't keep your CPU usage pegged at 80%+ for over an hour, or the system might throttle or shut you down.",
+             "sec-4-title": "4. Absolute No-Nos (The Blacklist)",
+             "sec-4-desc": "Free doesn't mean lawless. Do these and you're instantly out:",
+             "sec-4-1-title": "4.1 Zero Mining:",
+             "sec-4-1-desc": "Running crypto miners (like XMRig) is strictly banned. Instant permaban, no exceptions.",
+             "sec-4-2-title": "4.2 No Attacks or Scrapers:",
+             "sec-4-2-desc": "Don't use our servers for DDoS, port scanning, raids, or aggressive web scrapers.",
+             "sec-4-3-title": "4.3 Malware & Trojans:",
+             "sec-4-3-desc": "No hosting viruses, ransomware, trojans, or unauthorized remote control backdoors.",
+             "sec-4-4-title": "4.4 No Unauthorized Tunnels (Strict):",
+             "sec-4-4-desc": "For security reasons, running unmonitored tunneling tools like <code>sshx</code>, <code>tmate</code>, or unauthorized <code>ngrok</code> / <code>cloudflared</code> inside containers is strictly prohibited and will get your server suspended.",
+             "sec-4-5-title": "4.5 No Operating System Downloads or Installs:",
+             "sec-4-5-desc": "Do not download, install, or run complete Linux, Windows, or other operating system images, ISOs, root filesystems, or use the container to create nested virtual machines or containers. Package downloads required by permitted applications are allowed.",
+             "sec-4-6-title": "4.6 Adult & Illegal Content:",
+             "sec-4-6-desc": "No illegal stuff or adult content (including AI-generated adult media or adult sites).",
+             "sec-4-7-title": "4.7 Storage and Bandwidth Abuse:",
+             "sec-4-7-desc": "Do not use the service for public file sharing, piracy, proxy relaying, bulk download sites, or other activities that continuously consume excessive storage or bandwidth.",
+             "sec-4-8-title": "4.8 Unauthorized Access:",
+             "sec-4-8-desc": "Do not attempt to access, read, modify, or damage data or functionality belonging to other users, servers, panels, or host systems without authorization.",
+             "sec-4-9-title": "4.9 Spam and Automated Abuse:",
+             "sec-4-9-desc": "Do not send spam, mass-create accounts, flood services, harass others, or continuously send high-frequency automated requests that affect service stability.",
+             "sec-4-10-title": "4.10 No Resource Limit Evasion:",
+             "sec-4-10-desc": "Do not bypass server, CPU, memory, or bandwidth limits by using multiple accounts, process disguises, exploits, or any other method.",
+             "sec-4-11-title": "4.11 Piracy, Cracks & Torrenting:",
+             "sec-4-11-desc": "Do not store or distribute pirated software, cracking tools, or ROMs, and do not download or seed using BitTorrent or other P2P tools. Sites that link to or teach how to get such material are also prohibited.",
+             "sec-4-12-title": "4.12 Proxies & IRC:",
+             "sec-4-12-desc": "Do not run proxy or VPN relay nodes, or host or connect to IRC network servers. The first offense gets your server suspended; a repeat gets your account terminated.",
+             "sec-4-13-title": "4.13 False & Defamatory Content:",
+             "sec-4-13-desc": "Do not host sites or services that spread false information or defame or smear individuals, groups, or businesses.",
+             "sec-5-title": "5. Server Inactivity and Recycling Rules",
+             "sec-5-desc": "Please use your server regularly and keep it active:",
+             "sec-5-1-title": "5.1 No Activity Within 7 Days After Creation:",
+             "sec-5-1-desc": "If a server has no startup, login, deployment, or other activity within 7 days after creation, we may permanently delete it. Data retrieval or restoration requests will not be accepted.",
+             "sec-5-2-title": "5.2 More Than 15 Days Without Startup or Activity:",
+             "sec-5-2-desc": "If a server has no startup or activity for more than 15 consecutive days, we may shut it down. This rule does not apply while the server is currently running.",
+             "sec-5-3-title": "5.3 Back Up Your Stuff:",
+             "sec-5-3-desc": "Always back up important files, such as Minecraft worlds or source code, to your local PC. We are not responsible for data loss or restoration if the server is deleted, shut down, or fails.",
+             "sec-6-title": "6. Data Security & Liability",
+             "sec-6-desc": "Regarding safety and claims:",
+             "sec-6-1-title": "6.1 Use at Your Own Risk:",
+             "sec-6-1-desc": "This is a free host with no enterprise-grade backups. Protect your own data.",
+             "sec-6-2-title": "6.2 Hacker Incidents:",
+             "sec-6-2-desc": "If an external hack messes things up, we'll only help restore virtual items (like Minecraft building saves) at our discretion.",
+             "sec-6-3-title": "6.3 Zero Monetary Claims:",
+             "sec-6-3-desc": "Since everything is <strong>free</strong>, we <strong>strictly refuse</strong> any cash or financial damage claims. You agree to this by using the service.",
+             "sec-6-4-title": "6.4 Third-Party Services:",
+             "sec-6-4-desc": "Your server may use third-party networks, domains, packages, APIs, or other external services. Their availability, fees, rules, and data practices are controlled by their respective providers.",
+             "sec-6-5-title": "6.5 User Content and Legal Responsibility:",
+             "sec-6-5-desc": "You must ensure that content you upload, publish, or run does not violate others' rights and complies with applicable laws. You are responsible for disputes or liability arising from your content or actions.",
+             "sec-6-6-title": "6.6 Security Incident Reports:",
+             "sec-6-6-desc": "If you notice an account compromise, data leak, or other security issue, notify the administrator as soon as possible and provide the necessary information for investigation and response.",
+             "sec-6-7-title": "6.7 You Cover Losses You Cause:",
+             "sec-6-7-desc": "If your breach of these terms causes Wayne Free Host or a third party to suffer losses, claims, or legal costs, you are responsible for compensating them and must cooperate with us in handling it.",
+             "sec-7-title": "7. What Happens If You Break the Rules?",
+             "sec-7-desc": "If you cross the line, the admin drops the hammer:",
+             "action-1": "Suspend server immediately (kept for 24 hours for backups before permanent deletion)",
+             "action-2": "Restrict or strip account privileges",
+             "action-3": "Delete the violating server instance",
+             "action-4": "Permanently terminate and blacklist your account",
+             "action-5": "If you believe an action was incorrect, contact the administrator within 7 days to submit an appeal",
+             "action-6": "During maintenance, security incidents, or emergencies, the administrator may act immediately without prior notice",
+             "action-7": "During an investigation of a violation or security incident, the administrator may temporarily restrict server and account features",
+             "action-8": "System records generated by the panel, host, and network services may be reviewed when resolving disputes",
+             "action-9": "After an account is terminated, you may not bypass the action and reuse the service through another account or method",
+             "action-10": "Abusing, harassing, or being disrespectful toward the administrator or staff may get your account terminated immediately",
+             "action-11": "Threatening legal action against the administrator or the service will get your account terminated; please talk things out first",
+             "sec-9-footer": "You'll usually get a heads-up via Discord if action is taken.",
+             "sec-8-title": "8. Final Words",
+             "sec-8-desc-1": "These terms can change anytime. Continuing to use the service means you accept the updates.",
+             "sec-8-desc-2": "Alright, reading this means you agree! Wayne retains the final right of interpretation. Have fun!",
+             "dark-btn": "Dark Mode",
+             "light-btn": "Light Mode"
+         }
+     };
+
+     function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+     function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+     let lang = load('wayne-lang') || 'zh';
+     let theme = load('wayne-theme') || 'light';
+     const root = document.documentElement;
+
+     function applyLanguage(targetLang) {
+         lang = targetLang;
+         store('wayne-lang', lang);
+         root.lang = lang === 'en' ? 'en' : 'zh-Hant';
+
+         const dict = translations[lang];
+         document.querySelectorAll('[data-i18n]').forEach(el => {
+             const key = el.getAttribute('data-i18n');
+             if (dict[key] !== undefined) {
+                 el.innerHTML = dict[key];
+             }
+         });
+
+         document.title = lang === 'en' ? 'Wayne Free Host | Terms of Service' : 'Wayne Free Host｜服務條款';
+         document.getElementById('lang-toggle').textContent = lang === 'en' ? '中文' : 'EN';
+         updateThemeButtonText();
+     }
+
+     function updateThemeButtonText() {
+         const dict = translations[lang];
+         document.getElementById('theme-toggle').textContent = theme === 'dark' ? dict['light-btn'] : dict['dark-btn'];
+     }
+
+     function setTheme(next) {
+         theme = next;
+         root.dataset.theme = theme;
+         store('wayne-theme', theme);
+         updateThemeButtonText();
+     }
+
+     function setupScrollSpy() {
+         const links = Array.from(document.querySelectorAll('#toc a'));
+         const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+         if (!('IntersectionObserver' in window)) return;
+         const obs = new IntersectionObserver(entries => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     const idx = sections.indexOf(entry.target);
+                     links.forEach((a, i) => a.classList.toggle('active', i === idx));
+                 }
+             });
+         }, { rootMargin: '-90px 0px -60% 0px', threshold: 0 });
+         sections.forEach(s => s && obs.observe(s));
+     }
+
+     document.addEventListener('DOMContentLoaded', () => {
+         setTheme(theme);
+         applyLanguage(lang);
+         setupScrollSpy();
+         document.getElementById('lang-toggle').onclick = () => applyLanguage(lang === 'zh' ? 'en' : 'zh');
+         document.getElementById('theme-toggle').onclick = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+     });
+    })();
+    </script>
+</body>
+</html>
