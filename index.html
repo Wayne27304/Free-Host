@@ -315,15 +315,17 @@
             <a href="#s4" data-i18n="sec-4-title">4. 絕對不能做的事（黑名單）</a>
             <a href="#s5" data-i18n="sec-5-title">5. 伺服器閒置與回收規則</a>
             <a href="#s6" data-i18n="sec-6-title">6. 資料安全與賠償</a>
-            <a href="#s7" data-i18n="sec-7-title">7. 違規會怎樣？</a>
-            <a href="#s8" data-i18n="sec-8-title">8. 最後的碎碎念</a>
+            <a href="#s7" data-i18n="sec-adm-title">7. 管理人員隱私與安全行為準則</a>
+            <a href="#s8" data-i18n="sec-prv-title">8. 隱私權與資料安全</a>
+            <a href="#s9" data-i18n="sec-7-title">9. 違規會怎樣？</a>
+            <a href="#s10" data-i18n="sec-8-title">10. 最後的碎碎念</a>
         </aside>
 
         <main id="doc">
             <header class="doc-header">
                 <p class="doc-kicker" data-i18n="doc-kicker">WAYNE FREE HOST / 服務條款</p>
                 <h1 data-i18n="doc-title">Wayne Free Host 服務條款</h1>
-                <p class="doc-date"><strong data-i18n="update-date-label">更新日期</strong><span data-i18n="update-date-val">：2026 年 10 月 7 日</span></p>
+                <p class="doc-date"><strong data-i18n="update-date-label">更新日期</strong><span data-i18n="update-date-val">：2026 年 10 月 14 日</span></p>
                 <blockquote>
                     <p data-i18n="intro-quote">哈囉！歡迎來到 Wayne Free Host。既然是免費的主機服務，有些醜話還是得先講在前面。只要你註冊跟開了伺服器，就代表你同意底下這些規定。如果看了覺得無法接受，那可能這裏就不太適合你啦～</p>
                 </blockquote>
@@ -345,6 +347,7 @@
                 <ul>
                     <li><strong data-i18n="sec-2-1-title">2.1 一人一個帳號就好：</strong><span data-i18n="sec-2-1-desc">拜託不要辦一堆小號來洗伺服器資源。抓到開小號多開的，直接全部一起永久封鎖。</span></li>
                     <li><strong data-i18n="sec-2-2-title">2.2 密碼自己顧好：</strong><span data-i18n="sec-2-2-desc">帳號密碼請自己妥善保管，用你帳號幹了什麼壞事，責任就是算在你的頭上。</span></li>
+                    <li><strong data-i18n="sec-2-3-title">2.3 連續輸錯三次就封 IP：</strong><span data-i18n="sec-2-3-desc">主機有自動防護，VPS 連續三次密碼打錯來源 IP 就會被系統直接封鎖。如果不小心把自己鎖在外面的話，再來找管理員解封。</span></li>
                     <li><strong data-i18n="sec-2-4-title">2.4 不得轉讓或轉售：</strong><span data-i18n="sec-2-4-desc">未經管理員同意，不得把你的帳號或伺服器轉讓、出租、轉售或分享給其他人使用。</span></li>
                 </ul>
             </section>
@@ -356,6 +359,11 @@
                     <li><strong data-i18n="sec-3-1-title">3.1 數量限制：</strong><span data-i18n="sec-3-1-desc">普通用戶最多只能同時開 <strong>5 台</strong> 伺服器；管理員權限最多 <strong>10 台</strong>。</span></li>
                     <li><strong data-i18n="sec-3-2-title">3.2 效能配額：</strong><span data-i18n="sec-3-2-desc">普通用戶每台伺服器上限就是 CPU <strong>20%</strong>、RAM <strong>512MB</strong>。管理員則是不限制。</span></li>
                     <li><strong data-i18n="sec-3-3-title">3.3 別讓 CPU 長時間飆高：</strong><span data-i18n="sec-3-3-desc">不要讓主機 CPU 一小時內長時間維持在 80% 以上，太誇張會直接被系統降級或強制關機。</span></li>
+                    <li><strong data-i18n="sec-3-4-title">3.4 磁碟空間上限：</strong><span data-i18n="sec-3-4-desc">普通用戶每台伺服器的磁碟空間（Pterodactyl 面板上的 Disk）上限為 <strong>1 GB</strong>，管理員另行配置。世界存檔、日誌、暫存檔、模組、<code>node_modules</code>、備份檔等伺服器內所有檔案都計入用量，一律以面板顯示為準。</span></li>
+                    <li><strong data-i18n="sec-3-5-title">3.5 超過磁碟配額會怎樣：</strong><span data-i18n="sec-3-5-desc">磁碟用量超過上限時，面板可能阻止伺服器啟動、無法上傳或寫入檔案，並可能導致存檔損毀或遺失。收到通知後請在 <strong>48 小時內</strong>自行清理；逾期管理員有權直接刪除超額檔案（優先處理日誌、暫存檔與備份）或停用伺服器。因超額造成的資料損毀或遺失，我們不負任何責任。</span></li>
+                    <li><strong data-i18n="sec-3-6-title">3.6 不得規避磁碟限制：</strong><span data-i18n="sec-3-6-desc">禁止利用符號連結（symlink）、掛載外部儲存、把資料藏到容器以外的位置、偽造檔案大小或其他方式繞過磁碟配額。被發現者視同違反 4.10，直接停用伺服器。</span></li>
+                    <li><strong data-i18n="sec-3-7-title">3.7 備份、資料庫與埠口：</strong><span data-i18n="sec-3-7-desc">每台伺服器最多 <strong>1 份</strong>備份、<strong>1 個</strong>資料庫、<strong>2 個</strong>網路埠口（Allocation）。備份檔請定期下載到自己的電腦，面板上的備份不算是安全的異地備份。</span></li>
+                    <li><strong data-i18n="sec-3-8-title">3.8 檔案數量、單檔大小與頻寬：</strong><span data-i18n="sec-3-8-desc">單一伺服器檔案總數不得超過 <strong>50,000 個</strong>，單一檔案不得超過 <strong>500 MB</strong>；磁碟 I/O 或網路頻寬長時間異常偏高，影響到其他用戶時，管理員可要求你清理、限速或停用伺服器。</span></li>
                 </ul>
             </section>
 
@@ -376,6 +384,10 @@
                     <li><strong data-i18n="sec-4-11-title">4.11 盜版、破解與 BT 下載：</strong><span data-i18n="sec-4-11-desc">禁止存放或散布盜版軟體、破解工具、ROM，也禁止使用 BitTorrent 等 P2P 工具下載或做種；提供這類內容連結或教學的網站同樣不行。</span></li>
                     <li><strong data-i18n="sec-4-12-title">4.12 代理與 IRC：</strong><span data-i18n="sec-4-12-desc">禁止架設代理（Proxy）或 VPN 轉發節點，也禁止建立或連接 IRC 網路伺服器。第一次違規會停用伺服器，再犯直接終止帳號。</span></li>
                     <li><strong data-i18n="sec-4-13-title">4.13 不實與誹謗內容：</strong><span data-i18n="sec-4-13-desc">禁止架設散布不實資訊，或誹謗、抹黑個人、團體、企業的網站與服務。</span></li>
+                    <li><strong data-i18n="sec-4-14-title">4.14 冒充與社交工程：</strong><span data-i18n="sec-4-14-desc">禁止冒充管理員、工作人員或其他用戶，也禁止以任何話術騙取他人的密碼、驗證碼、Token 或權限。</span></li>
+                    <li><strong data-i18n="sec-4-15-title">4.15 侵犯他人隱私：</strong><span data-i18n="sec-4-15-desc">禁止蒐集、公開、交易他人的個人資料（含人肉搜索、截圖外流 Discord 私訊與管理員對話），也禁止在伺服器上架設未經同意蒐集他人資料的網站或程式。</span></li>
+                    <li><strong data-i18n="sec-4-16-title">4.16 濫用面板與 API：</strong><span data-i18n="sec-4-16-desc">禁止暴力嘗試登入、濫用面板 API 或 SFTP、短時間反覆建立與刪除伺服器，或以任何方式探測面板與節點的漏洞。</span></li>
+                    <li><strong data-i18n="sec-4-17-title">4.17 外洩憑證與敏感資料：</strong><span data-i18n="sec-4-17-desc">禁止把面板帳密、API Key、SFTP 密碼、Token 或 <code>.env</code> 內容公開或貼到公開場合；因此被盜用造成的後果由你自己負責。</span></li>
                 </ul>
             </section>
 
@@ -404,7 +416,43 @@
             </section>
 
             <section class="card" id="s7">
-                <h2 data-i18n="sec-7-title">7. 違規會怎樣？</h2>
+                <h2 data-i18n="sec-adm-title">7. 管理人員隱私與安全行為準則</h2>
+                <p data-i18n="sec-adm-desc">管理員手上握有很大的權限，所以對管理員與協助管理的工作人員，要求比一般用戶更嚴格：</p>
+                <ul>
+                    <li><strong data-i18n="adm-1-title">7.1 最小權限原則：</strong><span data-i18n="adm-1-desc">管理員與工作人員只取得完成工作所需的最低權限，不需要的權限一律不給；職務異動或離開團隊時，權限、API Key 與 SSH 金鑰必須<strong>立即</strong>撤銷。</span></li>
+                    <li><strong data-i18n="adm-2-title">7.2 不得無故查看用戶資料：</strong><span data-i18n="adm-2-desc">禁止在沒有正當理由的情況下查看用戶的檔案、主控台、資料庫、日誌或訊息。僅限以下情況可存取：處理檢舉、調查違規或安全事件、系統維護必要、用戶本人要求協助；存取範圍僅限於處理事情所需的最小範圍。</span></li>
+                    <li><strong data-i18n="adm-3-title">7.3 禁止外洩、轉傳或販售：</strong><span data-i18n="adm-3-desc">任何在管理過程中接觸到的資料（Discord ID、Email、IP、檔案內容、密碼、日誌、截圖、對話）都不得複製、轉傳、公開、販售或用於管理以外的目的，離任後此義務依然有效。</span></li>
+                    <li><strong data-i18n="adm-4-title">7.4 不得索取密碼或驗證碼：</strong><span data-i18n="adm-4-desc">管理員永遠不會、也不得向用戶索取密碼、2FA 驗證碼、API Key 或 Token。需要協助時，應由管理員在面板上透過正規流程處理，不得要求用戶提供憑證。</span></li>
+                    <li><strong data-i18n="adm-5-title">7.5 帳號強制安全要求：</strong><span data-i18n="adm-5-desc">管理員帳號必須啟用雙重驗證（2FA）、使用高強度且不重複的密碼、不得與他人共用帳號，也不得在公共或不受信任的裝置上登入面板；發現帳號或裝置疑似遭入侵，須立即通報並更換所有憑證。</span></li>
+                    <li><strong data-i18n="adm-6-title">7.6 敏感操作須留紀錄：</strong><span data-i18n="adm-6-desc">查看用戶檔案、停用或刪除伺服器、解封 IP、重設或變更用戶資料等敏感操作，都必須留下原因與時間紀錄；禁止刪除、竄改或規避面板活動日誌與稽核紀錄。</span></li>
+                    <li><strong data-i18n="adm-7-title">7.7 不得濫用權限：</strong><span data-i18n="adm-7-desc">禁止替自己或他人開後門、給予超額資源或特權、私下放行違規內容、利用管理員身分繞過資源限制，或把節點資源挪作私人用途（含挖礦）。管理員同樣必須遵守第 3、4 條。</span></li>
+                    <li><strong data-i18n="adm-8-title">7.8 處置須公平且有憑證：</strong><span data-i18n="adm-8-desc">處置用戶必須依本條款執行並保留證據（截圖、日誌、時間），不得挾怨報復、偏袒朋友或私下交易；與當事人有利害關係時必須迴避，交由其他管理員處理。</span></li>
+                    <li><strong data-i18n="adm-9-title">7.9 基礎設施機密：</strong><span data-i18n="adm-9-desc">Wings Token、面板 API Key、資料庫密碼、<code>.env</code>、SSH 金鑰、Cloudflare Tunnel 憑證、節點內網位置等屬於機密，不得公開、截圖外流或貼到公開頻道；懷疑外洩時必須立即更換。</span></li>
+                    <li><strong data-i18n="adm-10-title">7.10 遠端存取與工作環境：</strong><span data-i18n="adm-10-desc">管理節點時只能使用經授權的方式（面板、SSH 金鑰），禁止自行架設未授權的隧道、遠端控制或代理工具；處理完畢後須登出，並不得把用戶資料下載或存放在個人裝置、雲端硬碟或聊天軟體。</span></li>
+                    <li><strong data-i18n="adm-11-title">7.11 資安事件通報：</strong><span data-i18n="adm-11-desc">發現入侵、資料外洩、憑證遺失或任何可疑行為時，必須在 <strong>24 小時內</strong>通報 Wayne，並保留現場證據；隱匿不報者視為重大違規。</span></li>
+                    <li><strong data-i18n="adm-12-title">7.12 保密義務與離任：</strong><span data-i18n="adm-12-desc">保密義務在任期結束後依然有效。離任時必須交還所有憑證、刪除手上持有的用戶資料與截圖，並確認帳號權限已被移除。</span></li>
+                    <li><strong data-i18n="adm-13-title">7.13 違反管理員準則的後果：</strong><span data-i18n="adm-13-desc">違反本條準則者，立即撤銷管理權限；情節嚴重者永久封鎖帳號並公開處分結果，造成用戶或服務損失者須負賠償責任，必要時將依法追究。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s8">
+                <h2 data-i18n="sec-prv-title">8. 隱私權與資料安全</h2>
+                <p data-i18n="sec-prv-desc">你的資料我們怎麼處理，白紙黑字寫清楚：</p>
+                <ul>
+                    <li><strong data-i18n="prv-1-title">8.1 我們會蒐集哪些資料：</strong><span data-i18n="prv-1-desc">Discord 帳號資訊（ID、名稱、頭像）、登入時的 IP 位址、邀請與點數紀錄、伺服器資源使用量，以及面板與主機產生的活動與系統日誌。我們不會蒐集你不需要提供的資料。</span></li>
+                    <li><strong data-i18n="prv-2-title">8.2 蒐集目的：</strong><span data-i18n="prv-2-desc">資料僅用於提供服務、防止濫用與多開、處理違規與申訴、維護資安與統計資源使用，不會用於廣告或其他無關用途。</span></li>
+                    <li><strong data-i18n="prv-3-title">8.3 不販售、不公開：</strong><span data-i18n="prv-3-desc">我們不會販售、出租或公開你的個人資料；除了因為法律要求、保護服務安全，或處理你與管理員之間的爭議，否則不會提供給第三方。</span></li>
+                    <li><strong data-i18n="prv-4-title">8.4 管理員查看檔案的限制：</strong><span data-i18n="prv-4-desc">你的伺服器檔案、主控台與資料庫預設是私人的，管理員只會在第 7.2 條列出的情況下查看，且受第 7 條所有規範約束。</span></li>
+                    <li><strong data-i18n="prv-5-title">8.5 保存期限：</strong><span data-i18n="prv-5-desc">活動與系統日誌最多保留 <strong>90 天</strong>；帳號被刪除或終止後，個人資料會在 <strong>30 天內</strong>清除。為了防止被封鎖者重新註冊，黑名單所需的最少識別資料（如 Discord ID、IP）可長期保留。</span></li>
+                    <li><strong data-i18n="prv-6-title">8.6 你的權利：</strong><span data-i18n="prv-6-desc">你可以隨時聯絡管理員，要求查詢、更正或刪除屬於你的個人資料；但為了處理中的違規調查、資安事件或法律要求而必須保留的資料除外。</span></li>
+                    <li><strong data-i18n="prv-7-title">8.7 第三方服務的資料：</strong><span data-i18n="prv-7-desc">登入與通知會經過 Discord，連線可能經過 Cloudflare 等網路服務，這些第三方依其自身隱私政策處理資料，我們無法控制。</span></li>
+                    <li><strong data-i18n="prv-8-title">8.8 用戶自身的安全責任：</strong><span data-i18n="prv-8-desc">請為你的 Discord 與相關帳號啟用雙重驗證，不要與他人共用密碼或 API Key，並定期檢查面板的 SFTP 與 API 存取。管理員<strong>永遠不會</strong>向你索取密碼或驗證碼，遇到有人這樣要求請立即回報。</span></li>
+                    <li><strong data-i18n="prv-9-title">8.9 隱私與安全問題回報：</strong><span data-i18n="prv-9-desc">發現隱私外洩、管理員違規查看資料或任何安全漏洞，請立即在 Discord 通報管理員；善意回報漏洞者不會被追究，但禁止利用漏洞取得或破壞他人資料。</span></li>
+                </ul>
+            </section>
+
+            <section class="card" id="s9">
+                <h2 data-i18n="sec-7-title">9. 違規會怎樣？</h2>
                 <p data-i18n="sec-7-desc">如果你踩到底線，管理員就會動手：</p>
                 <ul class="plain">
                     <li data-i18n="action-1">直接停用伺服器（會保留 24 小時讓你想辦法備份，逾期永久刪除）</li>
@@ -420,12 +468,14 @@
                     <li data-i18n="action-9">帳號遭終止後，不得以其他帳號或方式規避處分並重新使用服務</li>
                     <li data-i18n="action-10">對管理員或工作人員惡意辱罵、騷擾或態度惡劣者，管理員可直接終止帳號</li>
                     <li data-i18n="action-11">對管理員或本服務威脅提告者，帳號將直接終止；有爭議請先好好溝通</li>
+                    <li data-i18n="action-12">管理員違反第 7 條準則時，立即撤權並依第 7.13 條處理</li>
+                    <li data-i18n="action-13">嚴重違規（含外洩他人隱私、入侵、攻擊）可不經警告直接終止帳號；同一人多次違規，處分可累計加重</li>
                 </ul>
                 <p data-i18n="sec-9-footer">被處置時基本上都會透過 Discord 跟你說一聲。</p>
             </section>
 
-            <section class="card" id="s8">
-                <h2 data-i18n="sec-8-title">8. 最後的碎碎念</h2>
+            <section class="card" id="s10">
+                <h2 data-i18n="sec-8-title">10. 最後的碎碎念</h2>
                 <p data-i18n="sec-8-desc-1">這個條款隨時都可以改，如果我們更新了，繼續用就代表你接受新版本。</p>
                 <p data-i18n="sec-8-desc-2">好啦，看完就代表你同意啦！Wayne 保留所有條款的最終解釋權，祝大家玩得開心～</p>
             </section>
@@ -444,7 +494,7 @@
              "doc-kicker": "WAYNE FREE HOST / 服務條款",
              "doc-title": "Wayne Free Host 服務條款",
              "update-date-label": "更新日期",
-             "update-date-val": "：2026 年 10 月 7 日",
+             "update-date-val": "：2026 年 10 月 14 日",
              "intro-quote": "哈囉！歡迎來到 Wayne Free Host。既然是免費的主機服務，有些醜話還是得先講在前面。只要你註冊跟開了伺服器，就代表你同意底下這些規定。如果看了覺得無法接受，那可能這裏就不太適合你啦～",
              "sec-1-title": "1. 先講好：這是免費的",
              "sec-1-desc": "這裏所有的資源都是完全免費提供的，所以別要求太多 24 小時專人客服：",
@@ -461,6 +511,7 @@
              "sec-2-2-title": "2.2 密碼自己顧好：",
              "sec-2-2-desc": "帳號密碼請自己妥善保管，用你帳號幹了什麼壞事，責任就是算在你的頭上。",
              "sec-2-3-title": "2.3 連續輸錯三次就封 IP：",
+             "sec-2-3-desc": "主機有自動防護，VPS 連續三次密碼打錯來源 IP 就會被系統直接封鎖。如果不小心把自己鎖在外面的話，再來找管理員解封。",
              "sec-2-4-title": "2.4 不得轉讓或轉售：",
              "sec-2-4-desc": "未經管理員同意，不得把你的帳號或伺服器轉讓、出租、轉售或分享給其他人使用。",
              "sec-3-title": "3. 伺服器能開多少？規格是多少？",
@@ -471,6 +522,16 @@
              "sec-3-2-desc": "普通用戶每台伺服器上限就是 CPU <strong>20%</strong>、RAM <strong>512MB</strong>。管理員則是不限制。",
              "sec-3-3-title": "3.3 別讓 CPU 長時間飆高：",
              "sec-3-3-desc": "不要讓主機 CPU 一小時內長時間維持在 80% 以上，太誇張會直接被系統降級或強制關機。",
+             "sec-3-4-title": "3.4 磁碟空間上限：",
+             "sec-3-4-desc": "普通用戶每台伺服器的磁碟空間（Pterodactyl 面板上的 Disk）上限為 <strong>1 GB</strong>，管理員另行配置。世界存檔、日誌、暫存檔、模組、<code>node_modules</code>、備份檔等伺服器內所有檔案都計入用量，一律以面板顯示為準。",
+             "sec-3-5-title": "3.5 超過磁碟配額會怎樣：",
+             "sec-3-5-desc": "磁碟用量超過上限時，面板可能阻止伺服器啟動、無法上傳或寫入檔案，並可能導致存檔損毀或遺失。收到通知後請在 <strong>48 小時內</strong>自行清理；逾期管理員有權直接刪除超額檔案（優先處理日誌、暫存檔與備份）或停用伺服器。因超額造成的資料損毀或遺失，我們不負任何責任。",
+             "sec-3-6-title": "3.6 不得規避磁碟限制：",
+             "sec-3-6-desc": "禁止利用符號連結（symlink）、掛載外部儲存、把資料藏到容器以外的位置、偽造檔案大小或其他方式繞過磁碟配額。被發現者視同違反 4.10，直接停用伺服器。",
+             "sec-3-7-title": "3.7 備份、資料庫與埠口：",
+             "sec-3-7-desc": "每台伺服器最多 <strong>1 份</strong>備份、<strong>1 個</strong>資料庫、<strong>2 個</strong>網路埠口（Allocation）。備份檔請定期下載到自己的電腦，面板上的備份不算是安全的異地備份。",
+             "sec-3-8-title": "3.8 檔案數量、單檔大小與頻寬：",
+             "sec-3-8-desc": "單一伺服器檔案總數不得超過 <strong>50,000 個</strong>，單一檔案不得超過 <strong>500 MB</strong>；磁碟 I/O 或網路頻寬長時間異常偏高，影響到其他用戶時，管理員可要求你清理、限速或停用伺服器。",
              "sec-4-title": "4. 絕對不能做的事（黑名單）",
              "sec-4-desc": "免費歸免費，但有些東西踩下去就是直接掰掰：",
              "sec-4-1-title": "4.1 嚴禁挖礦：",
@@ -499,6 +560,14 @@
              "sec-4-12-desc": "禁止架設代理（Proxy）或 VPN 轉發節點，也禁止建立或連接 IRC 網路伺服器。第一次違規會停用伺服器，再犯直接終止帳號。",
              "sec-4-13-title": "4.13 不實與誹謗內容：",
              "sec-4-13-desc": "禁止架設散布不實資訊，或誹謗、抹黑個人、團體、企業的網站與服務。",
+             "sec-4-14-title": "4.14 冒充與社交工程：",
+             "sec-4-14-desc": "禁止冒充管理員、工作人員或其他用戶，也禁止以任何話術騙取他人的密碼、驗證碼、Token 或權限。",
+             "sec-4-15-title": "4.15 侵犯他人隱私：",
+             "sec-4-15-desc": "禁止蒐集、公開、交易他人的個人資料（含人肉搜索、截圖外流 Discord 私訊與管理員對話），也禁止在伺服器上架設未經同意蒐集他人資料的網站或程式。",
+             "sec-4-16-title": "4.16 濫用面板與 API：",
+             "sec-4-16-desc": "禁止暴力嘗試登入、濫用面板 API 或 SFTP、短時間反覆建立與刪除伺服器，或以任何方式探測面板與節點的漏洞。",
+             "sec-4-17-title": "4.17 外洩憑證與敏感資料：",
+             "sec-4-17-desc": "禁止把面板帳密、API Key、SFTP 密碼、Token 或 <code>.env</code> 內容公開或貼到公開場合；因此被盜用造成的後果由你自己負責。",
              "sec-5-title": "5. 伺服器閒置與回收規則",
              "sec-5-desc": "請定期使用並維持伺服器狀態：",
              "sec-5-1-title": "5.1 建立後 7 天內無動作將刪除：",
@@ -523,8 +592,56 @@
              "sec-6-6-desc": "如果發現帳號遭盜用、資料外洩或其他安全問題，請儘快通知管理員並提供必要資訊，以便我們調查與處理。",
              "sec-6-7-title": "6.7 違規造成的損失由你負責：",
              "sec-6-7-desc": "如果因為你違反本條款，導致 Wayne Free Host 或第三方受到損失、被索賠或產生法律費用，你必須負責賠償，並配合我們處理。",
-             "sec-7-title": "7. 違規會怎樣？",
+             "sec-7-title": "9. 違規會怎樣？",
              "sec-7-desc": "如果你踩到底線，管理員就會動手：",
+             "sec-adm-title": "7. 管理人員隱私與安全行為準則",
+             "sec-adm-desc": "管理員手上握有很大的權限，所以對管理員與協助管理的工作人員，要求比一般用戶更嚴格：",
+             "adm-1-title": "7.1 最小權限原則：",
+             "adm-1-desc": "管理員與工作人員只取得完成工作所需的最低權限，不需要的權限一律不給；職務異動或離開團隊時，權限、API Key 與 SSH 金鑰必須<strong>立即</strong>撤銷。",
+             "adm-2-title": "7.2 不得無故查看用戶資料：",
+             "adm-2-desc": "禁止在沒有正當理由的情況下查看用戶的檔案、主控台、資料庫、日誌或訊息。僅限以下情況可存取：處理檢舉、調查違規或安全事件、系統維護必要、用戶本人要求協助；存取範圍僅限於處理事情所需的最小範圍。",
+             "adm-3-title": "7.3 禁止外洩、轉傳或販售：",
+             "adm-3-desc": "任何在管理過程中接觸到的資料（Discord ID、Email、IP、檔案內容、密碼、日誌、截圖、對話）都不得複製、轉傳、公開、販售或用於管理以外的目的，離任後此義務依然有效。",
+             "adm-4-title": "7.4 不得索取密碼或驗證碼：",
+             "adm-4-desc": "管理員永遠不會、也不得向用戶索取密碼、2FA 驗證碼、API Key 或 Token。需要協助時，應由管理員在面板上透過正規流程處理，不得要求用戶提供憑證。",
+             "adm-5-title": "7.5 帳號強制安全要求：",
+             "adm-5-desc": "管理員帳號必須啟用雙重驗證（2FA）、使用高強度且不重複的密碼、不得與他人共用帳號，也不得在公共或不受信任的裝置上登入面板；發現帳號或裝置疑似遭入侵，須立即通報並更換所有憑證。",
+             "adm-6-title": "7.6 敏感操作須留紀錄：",
+             "adm-6-desc": "查看用戶檔案、停用或刪除伺服器、解封 IP、重設或變更用戶資料等敏感操作，都必須留下原因與時間紀錄；禁止刪除、竄改或規避面板活動日誌與稽核紀錄。",
+             "adm-7-title": "7.7 不得濫用權限：",
+             "adm-7-desc": "禁止替自己或他人開後門、給予超額資源或特權、私下放行違規內容、利用管理員身分繞過資源限制，或把節點資源挪作私人用途（含挖礦）。管理員同樣必須遵守第 3、4 條。",
+             "adm-8-title": "7.8 處置須公平且有憑證：",
+             "adm-8-desc": "處置用戶必須依本條款執行並保留證據（截圖、日誌、時間），不得挾怨報復、偏袒朋友或私下交易；與當事人有利害關係時必須迴避，交由其他管理員處理。",
+             "adm-9-title": "7.9 基礎設施機密：",
+             "adm-9-desc": "Wings Token、面板 API Key、資料庫密碼、<code>.env</code>、SSH 金鑰、Cloudflare Tunnel 憑證、節點內網位置等屬於機密，不得公開、截圖外流或貼到公開頻道；懷疑外洩時必須立即更換。",
+             "adm-10-title": "7.10 遠端存取與工作環境：",
+             "adm-10-desc": "管理節點時只能使用經授權的方式（面板、SSH 金鑰），禁止自行架設未授權的隧道、遠端控制或代理工具；處理完畢後須登出，並不得把用戶資料下載或存放在個人裝置、雲端硬碟或聊天軟體。",
+             "adm-11-title": "7.11 資安事件通報：",
+             "adm-11-desc": "發現入侵、資料外洩、憑證遺失或任何可疑行為時，必須在 <strong>24 小時內</strong>通報 Wayne，並保留現場證據；隱匿不報者視為重大違規。",
+             "adm-12-title": "7.12 保密義務與離任：",
+             "adm-12-desc": "保密義務在任期結束後依然有效。離任時必須交還所有憑證、刪除手上持有的用戶資料與截圖，並確認帳號權限已被移除。",
+             "adm-13-title": "7.13 違反管理員準則的後果：",
+             "adm-13-desc": "違反本條準則者，立即撤銷管理權限；情節嚴重者永久封鎖帳號並公開處分結果，造成用戶或服務損失者須負賠償責任，必要時將依法追究。",
+             "sec-prv-title": "8. 隱私權與資料安全",
+             "sec-prv-desc": "你的資料我們怎麼處理，白紙黑字寫清楚：",
+             "prv-1-title": "8.1 我們會蒐集哪些資料：",
+             "prv-1-desc": "Discord 帳號資訊（ID、名稱、頭像）、登入時的 IP 位址、邀請與點數紀錄、伺服器資源使用量，以及面板與主機產生的活動與系統日誌。我們不會蒐集你不需要提供的資料。",
+             "prv-2-title": "8.2 蒐集目的：",
+             "prv-2-desc": "資料僅用於提供服務、防止濫用與多開、處理違規與申訴、維護資安與統計資源使用，不會用於廣告或其他無關用途。",
+             "prv-3-title": "8.3 不販售、不公開：",
+             "prv-3-desc": "我們不會販售、出租或公開你的個人資料；除了因為法律要求、保護服務安全，或處理你與管理員之間的爭議，否則不會提供給第三方。",
+             "prv-4-title": "8.4 管理員查看檔案的限制：",
+             "prv-4-desc": "你的伺服器檔案、主控台與資料庫預設是私人的，管理員只會在第 7.2 條列出的情況下查看，且受第 7 條所有規範約束。",
+             "prv-5-title": "8.5 保存期限：",
+             "prv-5-desc": "活動與系統日誌最多保留 <strong>90 天</strong>；帳號被刪除或終止後，個人資料會在 <strong>30 天內</strong>清除。為了防止被封鎖者重新註冊，黑名單所需的最少識別資料（如 Discord ID、IP）可長期保留。",
+             "prv-6-title": "8.6 你的權利：",
+             "prv-6-desc": "你可以隨時聯絡管理員，要求查詢、更正或刪除屬於你的個人資料；但為了處理中的違規調查、資安事件或法律要求而必須保留的資料除外。",
+             "prv-7-title": "8.7 第三方服務的資料：",
+             "prv-7-desc": "登入與通知會經過 Discord，連線可能經過 Cloudflare 等網路服務，這些第三方依其自身隱私政策處理資料，我們無法控制。",
+             "prv-8-title": "8.8 用戶自身的安全責任：",
+             "prv-8-desc": "請為你的 Discord 與相關帳號啟用雙重驗證，不要與他人共用密碼或 API Key，並定期檢查面板的 SFTP 與 API 存取。管理員<strong>永遠不會</strong>向你索取密碼或驗證碼，遇到有人這樣要求請立即回報。",
+             "prv-9-title": "8.9 隱私與安全問題回報：",
+             "prv-9-desc": "發現隱私外洩、管理員違規查看資料或任何安全漏洞，請立即在 Discord 通報管理員；善意回報漏洞者不會被追究，但禁止利用漏洞取得或破壞他人資料。",
              "action-1": "直接停用伺服器（會保留 24 小時讓你想辦法備份，逾期永久刪除）",
              "action-2": "限制或拔掉你的帳號權限",
              "action-3": "把違規的伺服器直接刪掉",
@@ -536,8 +653,10 @@
              "action-9": "帳號遭終止後，不得以其他帳號或方式規避處分並重新使用服務",
              "action-10": "對管理員或工作人員惡意辱罵、騷擾或態度惡劣者，管理員可直接終止帳號",
              "action-11": "對管理員或本服務威脅提告者，帳號將直接終止；有爭議請先好好溝通",
+             "action-12": "管理員違反第 7 條準則時，立即撤權並依第 7.13 條處理",
+             "action-13": "嚴重違規（含外洩他人隱私、入侵、攻擊）可不經警告直接終止帳號；同一人多次違規，處分可累計加重",
              "sec-9-footer": "被處置時基本上都會透過 Discord 跟你說一聲。",
-             "sec-8-title": "8. 最後的碎碎念",
+             "sec-8-title": "10. 最後的碎碎念",
              "sec-8-desc-1": "這個條款隨時都可以改，如果我們更新了，繼續用就代表你接受新版本。",
              "sec-8-desc-2": "好啦，看完就代表你同意啦！Wayne 保留所有條款的最終解釋權，祝大家玩得開心～",
              "dark-btn": "切換深色",
@@ -550,7 +669,7 @@
              "doc-kicker": "WAYNE FREE HOST / TERMS",
              "doc-title": "Wayne Free Host Terms of Service",
              "update-date-label": "Last Updated",
-             "update-date-val": ": October 7, 2026",
+             "update-date-val": ": October 14, 2026",
              "intro-quote": "Hey there! Welcome to Wayne Free Host. Since this is a free service, we need to clear a few things up. By registering and spinning up a server, you agree to these rules. If you aren't cool with this, maybe this isn't the right place for you~",
              "sec-1-title": "1. First Things First: It's Free",
              "sec-1-desc": "Everything here is completely free, so don't expect 24/7 dedicated support:",
@@ -567,6 +686,7 @@
              "sec-2-2-title": "2.2 Secure Your Password:",
              "sec-2-2-desc": "Keep your login info safe. Whatever happens under your account is your responsibility.",
              "sec-2-3-title": "2.3 Three Strikes and Your IP is Blocked:",
+             "sec-2-3-desc": "Our VPS security automatically blocks source IPs after three consecutive incorrect password attempts. Hit up the admin if you lock yourself out.",
              "sec-2-4-title": "2.4 No Transfer or Resale:",
              "sec-2-4-desc": "Without the admin's approval, you may not transfer, rent out, resell, or share your account or servers with anyone else.",
              "sec-3-title": "3. Limits & Quotas",
@@ -577,6 +697,16 @@
              "sec-3-2-desc": "Regular instances are capped at <strong>20% CPU</strong> and <strong>512MB RAM</strong>. Admins have no limits.",
              "sec-3-3-title": "3.3 Don't Max Out CPU Forever:",
              "sec-3-3-desc": "Don't keep your CPU usage pegged at 80%+ for over an hour, or the system might throttle or shut you down.",
+             "sec-3-4-title": "3.4 Disk Space Limit:",
+             "sec-3-4-desc": "Regular users get <strong>1 GB</strong> of disk space per server (the Disk value in the Pterodactyl panel); admins are configured separately. Everything inside the server counts toward usage, including world saves, logs, temp files, mods, <code>node_modules</code> and backups. The panel's figure is final.",
+             "sec-3-5-title": "3.5 Exceeding the Disk Quota:",
+             "sec-3-5-desc": "If disk usage goes over the limit, the panel may block the server from starting or stop you from uploading or writing files, which can corrupt or lose your data. After being notified, you must clean up within <strong>48 hours</strong>; after that the admin may delete excess files (logs, temp files and backups first) or suspend the server. We are not liable for any corruption or loss caused by exceeding the quota.",
+             "sec-3-6-title": "3.6 No Evading the Disk Limit:",
+             "sec-3-6-desc": "Do not bypass the disk quota with symlinks, external mounts, storing data outside the container, faking file sizes, or any other trick. Doing so counts as a violation of 4.10 and the server will be suspended.",
+             "sec-3-7-title": "3.7 Backups, Databases & Ports:",
+             "sec-3-7-desc": "Each server may have at most <strong>1 backup</strong>, <strong>1 database</strong> and <strong>2 network ports</strong> (allocations). Download your backups to your own computer regularly; a backup kept on the panel is not a real off-site backup.",
+             "sec-3-8-title": "3.8 File Count, File Size & Bandwidth:",
+             "sec-3-8-desc": "A single server may not exceed <strong>50,000 files</strong> or any single file larger than <strong>500 MB</strong>. If disk I/O or network bandwidth stays abnormally high and affects other users, the admin may ask you to clean up, throttle you, or suspend the server.",
              "sec-4-title": "4. Absolute No-Nos (The Blacklist)",
              "sec-4-desc": "Free doesn't mean lawless. Do these and you're instantly out:",
              "sec-4-1-title": "4.1 Zero Mining:",
@@ -605,6 +735,14 @@
              "sec-4-12-desc": "Do not run proxy or VPN relay nodes, or host or connect to IRC network servers. The first offense gets your server suspended; a repeat gets your account terminated.",
              "sec-4-13-title": "4.13 False & Defamatory Content:",
              "sec-4-13-desc": "Do not host sites or services that spread false information or defame or smear individuals, groups, or businesses.",
+             "sec-4-14-title": "4.14 Impersonation & Social Engineering:",
+             "sec-4-14-desc": "Do not impersonate admins, staff or other users, and do not trick anyone into handing over passwords, verification codes, tokens or permissions.",
+             "sec-4-15-title": "4.15 Violating Others' Privacy:",
+             "sec-4-15-desc": "Do not collect, publish or trade other people's personal data (including doxxing or leaking Discord DMs and private conversations with admins), and do not host sites or programs that collect data without consent.",
+             "sec-4-16-title": "4.16 Panel & API Abuse:",
+             "sec-4-16-desc": "Do not brute-force logins, abuse the panel API or SFTP, repeatedly create and delete servers in a short time, or probe the panel or nodes for vulnerabilities.",
+             "sec-4-17-title": "4.17 Leaking Credentials:",
+             "sec-4-17-desc": "Do not publish or paste panel logins, API keys, SFTP passwords, tokens or <code>.env</code> contents in public. You are responsible for any consequences of credentials you leak.",
              "sec-5-title": "5. Server Inactivity and Recycling Rules",
              "sec-5-desc": "Please use your server regularly and keep it active:",
              "sec-5-1-title": "5.1 No Activity Within 7 Days After Creation:",
@@ -629,8 +767,56 @@
              "sec-6-6-desc": "If you notice an account compromise, data leak, or other security issue, notify the administrator as soon as possible and provide the necessary information for investigation and response.",
              "sec-6-7-title": "6.7 You Cover Losses You Cause:",
              "sec-6-7-desc": "If your breach of these terms causes Wayne Free Host or a third party to suffer losses, claims, or legal costs, you are responsible for compensating them and must cooperate with us in handling it.",
-             "sec-7-title": "7. What Happens If You Break the Rules?",
+             "sec-7-title": "9. What Happens If You Break the Rules?",
              "sec-7-desc": "If you cross the line, the admin drops the hammer:",
+             "sec-adm-title": "7. Admin Privacy & Security Code of Conduct",
+             "sec-adm-desc": "Admins hold significant power, so admins and the staff who assist them are held to a stricter standard than regular users:",
+             "adm-1-title": "7.1 Least Privilege:",
+             "adm-1-desc": "Admins and staff get only the minimum permissions needed for their work. When a role changes or someone leaves, their permissions, API keys and SSH keys must be revoked <strong>immediately</strong>.",
+             "adm-2-title": "7.2 No Snooping on User Data:",
+             "adm-2-desc": "Admins may not view a user's files, console, databases, logs or messages without a legitimate reason. Access is allowed only when handling reports, investigating violations or security incidents, performing necessary maintenance, or when the user asks for help, and only to the minimum extent needed.",
+             "adm-3-title": "7.3 No Leaking, Sharing or Selling:",
+             "adm-3-desc": "Any data seen while administering (Discord IDs, emails, IPs, file contents, passwords, logs, screenshots, conversations) may not be copied, forwarded, published, sold or used for anything outside administration. This obligation continues after leaving the team.",
+             "adm-4-title": "7.4 Never Ask for Passwords or Codes:",
+             "adm-4-desc": "Admins never ask, and must not ask, users for passwords, 2FA codes, API keys or tokens. When help is needed, admins must use the proper panel procedures instead of requesting credentials.",
+             "adm-5-title": "7.5 Mandatory Account Security:",
+             "adm-5-desc": "Admin accounts must have two-factor authentication (2FA) enabled, use strong and unique passwords, must never be shared, and must never be used on public or untrusted devices. If an account or device may be compromised, report it immediately and rotate all credentials.",
+             "adm-6-title": "7.6 Log Sensitive Actions:",
+             "adm-6-desc": "Sensitive actions such as viewing user files, suspending or deleting servers, unbanning IPs, and changing user data must be recorded with the reason and time. Deleting, altering or bypassing panel activity logs and audit records is forbidden.",
+             "adm-7-title": "7.7 No Abuse of Power:",
+             "adm-7-desc": "Admins may not create backdoors for themselves or others, grant extra resources or privileges, quietly allow violations, bypass resource limits with admin status, or use node resources for private purposes (including mining). Admins are also bound by Sections 3 and 4.",
+             "adm-8-title": "7.8 Fair, Evidence-Based Enforcement:",
+             "adm-8-desc": "Enforcement must follow these terms and be backed by evidence (screenshots, logs, timestamps). No revenge, favoritism or private deals. Admins with a conflict of interest must recuse themselves and hand the case to another admin.",
+             "adm-9-title": "7.9 Infrastructure Secrets:",
+             "adm-9-desc": "Wings tokens, panel API keys, database passwords, <code>.env</code> files, SSH keys, Cloudflare Tunnel credentials and internal node locations are confidential and must not be published, screenshotted or pasted in public channels. If a leak is suspected, rotate them immediately.",
+             "adm-10-title": "7.10 Remote Access & Work Environment:",
+             "adm-10-desc": "Only authorized methods (panel, SSH keys) may be used to manage nodes. Do not set up unauthorized tunnels, remote-control or proxy tools. Log out when finished, and do not download or store user data on personal devices, cloud drives or chat apps.",
+             "adm-11-title": "7.11 Security Incident Reporting:",
+             "adm-11-desc": "Any intrusion, data leak, lost credential or suspicious behavior must be reported to Wayne within <strong>24 hours</strong> with evidence preserved. Concealing an incident is a serious violation.",
+             "adm-12-title": "7.12 Confidentiality & Offboarding:",
+             "adm-12-desc": "Confidentiality continues after leaving. On departure, return all credentials, delete any user data and screenshots you hold, and confirm that your access has been removed.",
+             "adm-13-title": "7.13 Consequences for Admins:",
+             "adm-13-desc": "Violating this section results in immediate removal of admin privileges. Serious cases lead to a permanent ban and a public notice of the action; anyone who causes losses to users or the service must compensate them and may face legal action.",
+             "sec-prv-title": "8. Privacy & Data Security",
+             "sec-prv-desc": "Here is exactly how we handle your data:",
+             "prv-1-title": "8.1 What We Collect:",
+             "prv-1-desc": "Discord account info (ID, name, avatar), IP addresses at login, invite and points records, server resource usage, and activity and system logs generated by the panel and hosts. We do not collect anything you are not required to provide.",
+             "prv-2-title": "8.2 Why We Collect It:",
+             "prv-2-desc": "Data is used only to provide the service, prevent abuse and multi-accounting, handle violations and appeals, maintain security, and measure resource usage. It is never used for advertising or unrelated purposes.",
+             "prv-3-title": "8.3 No Selling, No Publishing:",
+             "prv-3-desc": "We will not sell, rent or publish your personal data, and will not give it to third parties except as required by law, to protect the safety of the service, or to resolve a dispute involving you.",
+             "prv-4-title": "8.4 Limits on Admin Access to Your Files:",
+             "prv-4-desc": "Your server files, console and databases are private by default. Admins will only look at them in the cases listed in 7.2 and are bound by all of Section 7.",
+             "prv-5-title": "8.5 Retention:",
+             "prv-5-desc": "Activity and system logs are kept for at most <strong>90 days</strong>. After an account is deleted or terminated, personal data is erased within <strong>30 days</strong>. The minimum identifiers needed for the blacklist (such as Discord ID and IP) may be kept long-term to prevent banned users from re-registering.",
+             "prv-6-title": "8.6 Your Rights:",
+             "prv-6-desc": "You may contact the admin at any time to request access to, correction of, or deletion of your personal data, except data that must be kept for an ongoing violation investigation, security incident or legal requirement.",
+             "prv-7-title": "8.7 Third-Party Data:",
+             "prv-7-desc": "Login and notifications go through Discord, and traffic may pass through services such as Cloudflare. These third parties process data under their own privacy policies, which we do not control.",
+             "prv-8-title": "8.8 Your Own Security Duties:",
+             "prv-8-desc": "Enable two-factor authentication on your Discord and related accounts, never share passwords or API keys, and regularly check your panel's SFTP and API access. Admins will <strong>never</strong> ask you for passwords or verification codes; report anyone who does.",
+             "prv-9-title": "8.9 Reporting Privacy & Security Issues:",
+             "prv-9-desc": "If you find a privacy leak, an admin viewing data improperly, or any security vulnerability, report it on Discord right away. Good-faith reports will not be punished, but exploiting a vulnerability to access or damage others' data is forbidden.",
              "action-1": "Suspend server immediately (kept for 24 hours for backups before permanent deletion)",
              "action-2": "Restrict or strip account privileges",
              "action-3": "Delete the violating server instance",
@@ -642,8 +828,10 @@
              "action-9": "After an account is terminated, you may not bypass the action and reuse the service through another account or method",
              "action-10": "Abusing, harassing, or being disrespectful toward the administrator or staff may get your account terminated immediately",
              "action-11": "Threatening legal action against the administrator or the service will get your account terminated; please talk things out first",
+             "action-12": "Admins who break Section 7 lose their privileges immediately and are handled under 7.13",
+             "action-13": "Serious violations (including leaking others' privacy, intrusion, attacks) may lead to immediate termination without warning; repeated violations by the same person stack and escalate",
              "sec-9-footer": "You'll usually get a heads-up via Discord if action is taken.",
-             "sec-8-title": "8. Final Words",
+             "sec-8-title": "10. Final Words",
              "sec-8-desc-1": "These terms can change anytime. Continuing to use the service means you accept the updates.",
              "sec-8-desc-2": "Alright, reading this means you agree! Wayne retains the final right of interpretation. Have fun!",
              "dark-btn": "Dark Mode",
