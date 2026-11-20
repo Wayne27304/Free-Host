@@ -9,16 +9,17 @@
 提供多種伺服器語言與 24 小時不間斷服務，讓你的 Discord 機器人隨時在線為大家服務！完全免費、資源平等，是專為開發者打造的優質選擇。
 
 * **簡單好用**：採用市面上最受歡迎的 Pterodactyl 面板，介面直覺、輕鬆上手。
-* **多節點支援**：提供多個不同地點的節點，確保服務穩定與高速運行。
+* **多節點支援**：提供多個不同地點的節點，確保服務穩定與高速運行 (有位於美國的節點)
 * **24/7 運行**：除必要維護外，伺服器全年無休在線。
+
 
 > **申請流程**：
 > 1. 前往官網 $\rightarrow$ 2. 加入 Discord $\rightarrow$ 3. 詳閱服務條款 $\rightarrow$ 4. 於註冊頻道完成申請 $\rightarrow$ 5. 專屬伺服器即刻誕生！
 > 
 > 
 
-* 🌐 **服務條款**：[wayne227304.qzz.io](https://wayne227304.qzz.io/)
-* 💬 **Discord 社群**：[加入群組](https://discord.gg/drMFgPb6QJ)
+* 🌐 **服務條款**：https://terms.wayhost.cc.cd/
+* 💬 **Discord 社群**：[加入群組](https://panel.wayhost.cc.cd/go/discord)
 
 ---
 
