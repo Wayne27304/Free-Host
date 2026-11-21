@@ -9,12 +9,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <script>
-/* 在繪製前套用主題，避免畫面閃爍 */
+/* 在繪製前套用主題與語言，避免畫面閃爍 */
 try {
   var saved = localStorage.getItem('wayhost-theme');
   var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (dark) document.documentElement.classList.add('dark');
 } catch (e) {}
+(function () {
+  var L = null, h = location.hash;
+  if (/^#en-/.test(h)) L = 'en';
+  else if (/^#zhs-/.test(h)) L = 'zh-Hans';
+  else if (/^#zht-/.test(h)) L = 'zh-Hant';
+  if (!L) { try { L = localStorage.getItem('wayhost-lang'); } catch (e) {} }
+  if (L !== 'en' && L !== 'zh-Hans' && L !== 'zh-Hant') {
+    var n = String(navigator.language || '').toLowerCase();
+    if (n.indexOf('en') === 0) L = 'en';
+    else if (/^zh-(tw|hk|mo|hant)/.test(n)) L = 'zh-Hant';
+    else if (n.indexOf('zh') === 0) L = 'zh-Hans';
+    else L = 'zh-Hant';
+  }
+  document.documentElement.setAttribute('data-ui', L);
+  document.documentElement.lang = L;
+})();
 </script>
 <style>
 /* ------------------------------------------------------------------
@@ -318,13 +334,43 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
 /* 頁尾 */
 .doc-footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--c-divider); font-size: 14px; color: var(--c-text-2); }
 .footer { border-top: 1px solid var(--c-divider); background: var(--c-bg); padding: 32px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); text-align: center; font-size: 13px; line-height: 24px; color: var(--c-text-2); }
+
+/* ---------------- 多語言 ---------------- */
+[hidden] { display: none !important; }
+.doc { display: none; }
+html[data-ui="zh-Hant"] .doc[data-lang="zh-Hant"],
+html[data-ui="en"] .doc[data-lang="en"],
+html[data-ui="zh-Hans"] .doc[data-lang="zh-Hans"] { display: block; }
+html[data-ui="zh-Hans"] { --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", "Heiti SC", sans-serif; }
+
+.lang { position: relative; display: flex; align-items: center; }
+.lang-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 8px; color: var(--c-text-2); transition: color .25s; }
+.lang-btn:hover, .lang-btn[aria-expanded="true"] { color: var(--c-brand-1); }
+.lang-btn svg { width: 18px; height: 18px; }
+.lang-menu {
+  position: absolute; right: -4px; top: calc(100% + 12px); z-index: 50; min-width: 152px;
+  padding: 6px; border-radius: 12px; border: 1px solid var(--c-divider);
+  background: var(--c-bg-elv); box-shadow: 0 12px 32px rgba(0, 0, 0, .12);
+}
+.lang-menu button {
+  display: block; width: 100%; text-align: left; padding: 6px 12px; border-radius: 6px;
+  font-size: 13px; line-height: 20px; font-weight: 500; color: var(--c-text-1);
+}
+.lang-menu button:hover { background: var(--c-bg-soft); color: var(--c-brand-1); }
+.lang-menu button[aria-checked="true"] { color: var(--c-brand-1); font-weight: 600; }
+
+@media (max-width: 767px) {
+  .nav-inner { gap: 4px; }
+  .nav-title { margin-right: 4px; }
+}
 </style>
+<noscript><style>.doc[data-lang="zh-Hant"]{display:block}</style></noscript>
 </head>
 <body>
 
 <header class="nav">
   <div class="nav-inner">
-    <a class="nav-title" href="#top" aria-label="Wayne Free Host 首頁">
+    <a class="nav-title" href="#top" aria-label="Wayne Free Host 首頁" data-i18n-aria="home">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <rect width="32" height="32" rx="8" fill="currentColor"/>
         <path d="M7 10l4.2 12L16 13.5 20.8 22 25 10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -332,40 +378,50 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
       <span>Wayne Free Host</span>
     </a>
     <div class="nav-spacer"></div>
-    <nav class="nav-links" aria-label="主要導覽">
-      <a class="active" href="#top">服務條款</a>
-      <a href="#" id="panel-link" rel="noopener">面板</a>
+    <nav class="nav-links" aria-label="主要導覽" data-i18n-aria="mainNav">
+      <a class="active" href="#top" data-i18n="terms">服務條款</a>
+      <a href="#" id="panel-link" rel="noopener" data-i18n="panel">面板</a>
     </nav>
+    <div class="lang">
+      <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-menu" aria-label="切換語言" title="切換語言" data-i18n-aria="language" data-i18n-title="language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu" role="menu" hidden>
+        <button type="button" role="menuitemradio" data-lang="zh-Hant" lang="zh-Hant" aria-checked="true">繁體中文</button>
+        <button type="button" role="menuitemradio" data-lang="en" lang="en" aria-checked="false">English</button>
+        <button type="button" role="menuitemradio" data-lang="zh-Hans" lang="zh-Hans" aria-checked="false">简体中文</button>
+      </div>
+    </div>
     <span class="nav-sep" aria-hidden="true"></span>
-    <button class="switch" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="切換深色模式" title="切換深色模式">
+    <button class="switch" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="切換深色模式" title="切換深色模式" data-i18n-aria="toggleDark" data-i18n-title="toggleDark">
       <span class="switch-knob">
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </span>
     </button>
-    <button class="burger" id="burger" type="button" aria-label="開啟選單" aria-expanded="false" aria-controls="menu-panel">
+    <button class="burger" id="burger" type="button" aria-label="開啟選單" aria-expanded="false" aria-controls="menu-panel" data-i18n-aria="openMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
   </div>
 </header>
 <div class="menu-panel" id="menu-panel" hidden>
-  <a href="#top">服務條款</a>
-  <a href="#" class="panel-link-m">面板</a>
+  <a href="#top" data-i18n="terms">服務條款</a>
+  <a href="#" class="panel-link-m" data-i18n="panel">面板</a>
 </div>
 
 <div class="local-nav" id="local-nav">
   <div class="local-nav-inner">
     <button class="local-btn" id="local-btn" type="button" aria-expanded="false" aria-controls="local-menu">
-      <span class="label" id="local-label">本頁目錄</span>
+      <span class="label" id="local-label" data-i18n="onThisPage">本頁目錄</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
     </button>
-    <a class="local-top" href="#top">回到頂端</a>
+    <a class="local-top" href="#top" data-i18n="backToTop">回到頂端</a>
   </div>
-  <nav class="local-menu" id="local-menu" aria-label="本頁目錄" hidden></nav>
+  <nav class="local-menu" id="local-menu" aria-label="本頁目錄" data-i18n-aria="onThisPage" hidden></nav>
 </div>
 
 <div class="layout" id="top">
-  <main class="content doc">
+    <main class="content doc" data-lang="zh-Hant" lang="zh-Hant">
     <p class="crumb">Wayne Free Host / 服務條款</p>
     <h1>Wayne Free Host 服務條款</h1>
     <p class="doc-meta">更新日期：<time datetime="2026-10-14">2026 年 10 月 14 日</time></p>
@@ -376,29 +432,31 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
     </div>
 
     <!-- 1 -->
-    <h2 id="s1">1. 服務性質</h2>
+    <h2 id="zht-s1">1. 服務性質</h2>
     <p class="lead">本服務所提供之全部資源均為免費性質，不提供專人客服，亦不提供任何形式之服務保證。</p>
 
-    <h3 id="c1-1">1.1 服務內容之調整</h3>
+    <h3 id="zht-c1-1">1.1 服務內容之調整</h3>
     <p>基於維護、重組或終止營運之需要，管理員（Wayne）得隨時變更、暫停或終止本服務之全部或一部，且無須事先通知使用者。</p>
-    <h3 id="c1-2">1.2 不保證服務可用性</h3>
+    <h3 id="zht-c1-2">1.2 不保證服務可用性</h3>
     <p>本服務不保證全年無休或不中斷運作，亦不提供企業等級之服務水準協議（SLA）。Discord 社群中之協助，屬成員間之互助性質。</p>
-    <h3 id="c1-3">1.3 維護與不可抗力</h3>
+    <h3 id="zht-c1-3">1.3 維護與不可抗力</h3>
     <p>本服務可能因維護需要而暫停，管理員將盡力事先通知，並於預定時間內完成。因維護、停電、網路中斷、天災或其他無法控制之因素，所致之服務中斷或資料損失，本服務不負賠償責任。</p>
 
     <!-- 2 -->
-    <h2 id="s2">2. 帳號與安全管理</h2>
+    <h2 id="zht-s2">2. 帳號與安全管理</h2>
     <p class="lead">為確保使用之公平性與服務之安全，使用者應遵守下列帳號與資訊安全要求。</p>
 
-    <h3 id="c2-1">2.1 每人限一帳號</h3>
+    <h3 id="zht-c2-1">2.1 每人限一帳號</h3>
     <p>每位使用者限註冊並使用一個帳號，不得以建立多個帳號之方式取得額外資源。經查證有多重帳號者，相關帳號將一併永久停權。</p>
-    <h3 id="c2-2">2.2 帳號保管責任</h3>
+    <h3 id="zht-c2-2">2.2 帳號保管責任</h3>
     <p>使用者應妥善保管其帳號與密碼。以該帳號進行之一切行為，均視為使用者本人之行為，並由使用者負責。</p>
-    <h3 id="c2-4">2.3 禁止轉讓與轉售</h3>
+    <h3 id="zht-c2-3">2.3 登入失敗之自動防護</h3>
+    <p>系統設有自動防護機制：VPS 連續三次輸入錯誤密碼者，其來源 IP 位址將遭自動封鎖。如因誤操作遭封鎖，請聯繫管理員申請解除。</p>
+    <h3 id="zht-c2-4">2.4 禁止轉讓與轉售</h3>
     <p>未經管理員同意，不得將帳號或伺服器轉讓、出租、轉售，或提供他人共同使用。</p>
 
     <!-- 3 -->
-    <h2 id="s3">3. 資源配額與使用限制</h2>
+    <h2 id="zht-s3">3. 資源配額與使用限制</h2>
     <p class="lead">由於資源有限，使用者應合理使用，不得影響其他使用者之權益。</p>
 
     <div class="table-wrap">
@@ -415,109 +473,109 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
       </table>
     </div>
 
-    <h3 id="c3-1">3.1 伺服器數量</h3>
+    <h3 id="zht-c3-1">3.1 伺服器數量</h3>
     <p>一般使用者同時最多可開啟 5 台伺服器；管理員最多 10 台。</p>
-    <h3 id="c3-2">3.2 運算資源配額</h3>
+    <h3 id="zht-c3-2">3.2 運算資源配額</h3>
     <p>一般使用者每台伺服器之上限為 CPU 20%、RAM 512 MB；管理員不在此限。</p>
-    <h3 id="c3-3">3.3 CPU 使用限制</h3>
+    <h3 id="zht-c3-3">3.3 CPU 使用限制</h3>
     <p>伺服器之 CPU 使用率於一小時內，不得長時間維持於 80% 以上。情節嚴重者，系統得降低其效能或強制關機。</p>
-    <h3 id="c3-4">3.4 磁碟空間上限</h3>
+    <h3 id="zht-c3-4">3.4 磁碟空間上限</h3>
     <p>一般使用者每台伺服器之磁碟空間（Pterodactyl 面板之 Disk）上限為 1 GB，管理員另行配置。伺服器內所有檔案，包含世界存檔、日誌、暫存檔、模組、<code>node_modules</code> 及備份檔，均計入用量，並以面板顯示之數據為準。</p>
-    <h3 id="c3-5">3.5 超過磁碟配額之處理</h3>
+    <h3 id="zht-c3-5">3.5 超過磁碟配額之處理</h3>
     <p>磁碟用量超過上限時，面板得阻止伺服器啟動、無法上傳或寫入檔案，並可能導致存檔損毀或遺失。使用者應於收到通知後 48 小時內自行清理；逾期者，管理員得直接刪除超額檔案（優先處理日誌、暫存檔及備份）或停用伺服器。因超額造成之資料損毀或遺失，本服務不負任何責任。</p>
-    <h3 id="c3-6">3.6 禁止規避磁碟限制</h3>
+    <h3 id="zht-c3-6">3.6 禁止規避磁碟限制</h3>
     <p>禁止以符號連結（symlink）、掛載外部儲存、將資料置於容器以外之位置、偽造檔案大小或其他方式規避磁碟配額。違者視同違反第 4.10 條，並將停用其伺服器。</p>
-    <h3 id="c3-7">3.7 備份、資料庫與埠口</h3>
+    <h3 id="zht-c3-7">3.7 備份、資料庫與埠口</h3>
     <p>每台伺服器最多得設置 1 份備份、1 個資料庫及 2 個網路埠口（Allocation）。</p>
     <div class="custom-block warning">
       <p class="title">備份提醒</p>
       <p>面板上之備份不屬於異地備份。請定期將備份檔下載至個人裝置自行保存。</p>
     </div>
-    <h3 id="c3-8">3.8 檔案數量、單檔大小與頻寬</h3>
+    <h3 id="zht-c3-8">3.8 檔案數量、單檔大小與頻寬</h3>
     <p>單一伺服器之檔案總數不得超過 50,000 個，單一檔案不得超過 500 MB。磁碟 I/O 或網路頻寬長時間異常偏高並影響其他使用者時，管理員得要求清理、限速或停用伺服器。</p>
 
     <!-- 4 -->
-    <h2 id="s4">4. 禁止行為</h2>
+    <h2 id="zht-s4">4. 禁止行為</h2>
     <p class="lead">下列行為一律禁止。違反者，管理員得依第 9 條逕行處置。</p>
 
-    <h3 id="c4-1">4.1 加密貨幣挖礦</h3>
+    <h3 id="zht-c4-1">4.1 加密貨幣挖礦</h3>
     <p>禁止執行任何加密貨幣挖礦程式（例如 <code>XMRig</code>）。經系統偵測者，立即停權帳號，不另行通知或協商。</p>
-    <h3 id="c4-2">4.2 惡意攻擊與爬蟲</h3>
+    <h3 id="zht-c4-2">4.2 惡意攻擊與爬蟲</h3>
     <p>禁止利用本服務發動分散式阻斷服務（DDoS）攻擊、網路掃描、洪水攻擊，或進行高頻率之惡意爬蟲。</p>
-    <h3 id="c4-3">4.3 惡意程式</h3>
+    <h3 id="zht-c4-3">4.3 惡意程式</h3>
     <p>禁止存放或執行木馬、病毒、勒索軟體，或任何遠端控制後門程式。</p>
-    <h3 id="c4-4">4.4 高風險內網穿透工具</h3>
+    <h3 id="zht-c4-4">4.4 高風險內網穿透工具</h3>
     <div class="custom-block danger">
       <p class="title">重點規定</p>
       <p>為確保安全，禁止於容器內擅自架設 <code>sshx</code>、<code>tmate</code>，或未經授權之 <code>ngrok</code>、<code>cloudflared</code> 等高風險隧道工具。違者將停用其伺服器。</p>
     </div>
-    <h3 id="c4-5">4.5 作業系統映像</h3>
+    <h3 id="zht-c4-5">4.5 作業系統映像</h3>
     <p>禁止於容器內下載、安裝或執行完整之 Linux、Windows 或其他作業系統映像、ISO、rootfs，亦禁止於容器內建立巢狀虛擬機或容器。一般應用程式運作所需之套件下載，不在此限。</p>
-    <h3 id="c4-6">4.6 色情與違法內容</h3>
+    <h3 id="zht-c4-6">4.6 色情與違法內容</h3>
     <p>禁止任何色情內容（包含 AI 生成之色情內容、成人網站等）及其他違反法令之內容。</p>
-    <h3 id="c4-7">4.7 濫用儲存與頻寬</h3>
+    <h3 id="zht-c4-7">4.7 濫用儲存與頻寬</h3>
     <p>禁止將本服務作為公開檔案分享、盜版散布、代理轉發、大量下載站，或其他長時間大量耗用儲存空間與頻寬之用途。</p>
-    <h3 id="c4-8">4.8 未經授權之存取</h3>
+    <h3 id="zht-c4-8">4.8 未經授權之存取</h3>
     <p>禁止嘗試登入、讀取、修改或破壞其他使用者、伺服器、面板或主機系統之資料與功能。</p>
-    <h3 id="c4-9">4.9 垃圾訊息與大量自動化請求</h3>
+    <h3 id="zht-c4-9">4.9 垃圾訊息與大量自動化請求</h3>
     <p>禁止發送垃圾郵件、大量建立帳號、洗版、傳送騷擾訊息，或以程式持續發送足以影響服務穩定性之高頻率請求。</p>
-    <h3 id="c4-10">4.10 規避資源限制</h3>
+    <h3 id="zht-c4-10">4.10 規避資源限制</h3>
     <p>禁止以多開帳號、程序偽裝、利用漏洞或其他方式，規避伺服器數量、CPU、記憶體及頻寬等資源限制。</p>
-    <h3 id="c4-11">4.11 盜版、破解與 P2P 下載</h3>
+    <h3 id="zht-c4-11">4.11 盜版、破解與 P2P 下載</h3>
     <p>禁止存放或散布盜版軟體、破解工具及 ROM；禁止使用 BitTorrent 等 P2P 工具下載或做種；提供前述內容之連結或教學之網站，亦在禁止之列。</p>
-    <h3 id="c4-12">4.12 代理與 IRC</h3>
+    <h3 id="zht-c4-12">4.12 代理與 IRC</h3>
     <p>禁止架設代理（Proxy）或 VPN 轉發節點，亦禁止建立或連接 IRC 網路伺服器。初次違反者，停用其伺服器；再次違反者，終止其帳號。</p>
-    <h3 id="c4-13">4.13 不實與誹謗內容</h3>
+    <h3 id="zht-c4-13">4.13 不實與誹謗內容</h3>
     <p>禁止架設用於散布不實資訊，或誹謗、毀損個人、團體、企業名譽之網站與服務。</p>
-    <h3 id="c4-14">4.14 冒充與社交工程</h3>
+    <h3 id="zht-c4-14">4.14 冒充與社交工程</h3>
     <p>禁止冒充管理員、工作人員或其他使用者，亦禁止以任何方式詐取他人之密碼、驗證碼、Token 或權限。</p>
-    <h3 id="c4-15">4.15 侵害他人隱私</h3>
+    <h3 id="zht-c4-15">4.15 侵害他人隱私</h3>
     <p>禁止蒐集、公開或交易他人之個人資料（包含人肉搜索，以及將 Discord 私訊與管理員對話截圖外流），亦禁止於伺服器上架設未經當事人同意而蒐集個人資料之網站或程式。</p>
-    <h3 id="c4-16">4.16 濫用面板與 API</h3>
+    <h3 id="zht-c4-16">4.16 濫用面板與 API</h3>
     <p>禁止暴力嘗試登入、濫用面板 API 或 SFTP、短時間內反覆建立與刪除伺服器，或以任何方式探測面板與節點之漏洞。</p>
-    <h3 id="c4-17">4.17 外洩憑證與敏感資料</h3>
+    <h3 id="zht-c4-17">4.17 外洩憑證與敏感資料</h3>
     <p>禁止將面板帳號密碼、API Key、SFTP 密碼、Token 或 <code>.env</code> 之內容公開或張貼於公開場合。因此遭盜用所造成之後果，由使用者自行負責。</p>
 
     <!-- 5 -->
-    <h2 id="s5">5. 閒置與回收規則</h2>
+    <h2 id="zht-s5">5. 閒置與回收規則</h2>
     <p class="lead">使用者應定期使用並維持伺服器之運作狀態。</p>
 
-    <h3 id="c5-1">5.1 建立後七日內無操作</h3>
+    <h3 id="zht-c5-1">5.1 建立後七日內無操作</h3>
     <p>伺服器建立後 7 日內，未有開機、登入、部署或其他操作者，管理員得直接刪除該伺服器，且不受理任何資料取回或復原之請求。</p>
-    <h3 id="c5-2">5.2 連續十五日未開機或操作</h3>
+    <h3 id="zht-c5-2">5.2 連續十五日未開機或操作</h3>
     <p>伺服器連續超過 15 日未開機或未有任何操作者，管理員得關閉該伺服器；惟伺服器目前處於開機運作狀態者，本項規定不適用。</p>
-    <h3 id="c5-3">5.3 資料備份責任</h3>
+    <h3 id="zht-c5-3">5.3 資料備份責任</h3>
     <p>重要資料（例如 Minecraft 世界檔案、網站原始碼）請使用者自行定期下載備份。因伺服器遭刪除、關閉或故障而致資料遺失者，本服務不負賠償或復原責任。</p>
 
     <!-- 6 -->
-    <h2 id="s6">6. 資料安全與責任</h2>
+    <h2 id="zht-s6">6. 資料安全與責任</h2>
     <p class="lead">本章規範資料安全、賠償範圍及雙方之責任劃分。</p>
 
-    <h3 id="c6-1">6.1 資料外洩風險自負</h3>
+    <h3 id="zht-c6-1">6.1 資料外洩風險自負</h3>
     <p>本服務為免費主機，不提供企業等級之資料保護保證，使用者應自行評估並承擔相關風險。</p>
-    <h3 id="c6-2">6.2 遭受外部攻擊之補償範圍</h3>
+    <h3 id="zht-c6-2">6.2 遭受外部攻擊之補償範圍</h3>
     <p>伺服器遭外部攻擊而發生問題時，本服務僅於可行範圍內協助恢復虛擬內容（例如 Minecraft 建築存檔），不保證能完整恢復。</p>
-    <h3 id="c6-3">6.3 不受理金錢賠償</h3>
+    <h3 id="zht-c6-3">6.3 不受理金錢賠償</h3>
     <div class="custom-block warning">
       <p class="title">請特別留意</p>
       <p>本服務為免費性質，不受理任何形式之金錢、現金或營業損失賠償請求。使用者須同意此項規定，始得使用本服務。</p>
     </div>
-    <h3 id="c6-4">6.4 第三方服務</h3>
+    <h3 id="zht-c6-4">6.4 第三方服務</h3>
     <p>伺服器運作可能須使用第三方網路、網域、套件、API 或其他外部服務。該等服務之可用性、費用、規則及資料處理方式，由其服務提供者負責。</p>
-    <h3 id="c6-5">6.5 使用者內容與法律責任</h3>
+    <h3 id="zht-c6-5">6.5 使用者內容與法律責任</h3>
     <p>使用者應確保其上傳、發布或執行之內容未侵害他人權利，並符合適用之法令。因使用者之內容或行為所生之爭議與責任，由使用者自行負責。</p>
-    <h3 id="c6-6">6.6 資安事件通報</h3>
+    <h3 id="zht-c6-6">6.6 資安事件通報</h3>
     <p>發現帳號遭盜用、資料外洩或其他安全問題時，請儘速通知管理員並提供必要資訊，以利調查與處理。</p>
-    <h3 id="c6-7">6.7 違規損失之賠償</h3>
+    <h3 id="zht-c6-7">6.7 違規損失之賠償</h3>
     <p>因使用者違反本條款，致 Wayne Free Host 或第三方受有損失、遭受求償或支出法律費用者，使用者應負賠償責任，並配合處理。</p>
 
     <!-- 7 -->
-    <h2 id="s7">7. 管理人員隱私與安全行為準則</h2>
+    <h2 id="zht-s7">7. 管理人員隱私與安全行為準則</h2>
     <p class="lead">管理員及協助管理之工作人員掌握較高之系統權限，因此適用較一般使用者更為嚴格之規範。</p>
 
-    <h3 id="c7-1">7.1 最小權限原則</h3>
+    <h3 id="zht-c7-1">7.1 最小權限原則</h3>
     <p>管理員及工作人員僅取得執行職務所必需之最低權限。職務異動或離開團隊時，其權限、API Key 及 SSH 金鑰應立即撤銷。</p>
-    <h3 id="c7-2">7.2 禁止無正當理由查看使用者資料</h3>
+    <h3 id="zht-c7-2">7.2 禁止無正當理由查看使用者資料</h3>
     <p>無正當理由者，不得查看使用者之檔案、主控台、資料庫、日誌或訊息。僅於下列情形得進行存取，且範圍以處理事項所需之最小範圍為限：</p>
     <ol>
       <li>處理檢舉；</li>
@@ -525,104 +583,608 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
       <li>系統維護所必需；</li>
       <li>使用者本人要求協助。</li>
     </ol>
-    <h3 id="c7-3">7.3 禁止外洩、轉傳或販售</h3>
+    <h3 id="zht-c7-3">7.3 禁止外洩、轉傳或販售</h3>
     <p>於管理過程中取得之任何資料（包含 Discord ID、電子郵件、IP 位址、檔案內容、密碼、日誌、截圖及對話），不得複製、轉傳、公開、販售，或用於管理以外之目的。離任後仍負相同義務。</p>
-    <h3 id="c7-4">7.4 禁止索取憑證</h3>
+    <h3 id="zht-c7-4">7.4 禁止索取憑證</h3>
     <p>管理員不得、亦不會向使用者索取密碼、雙重驗證（2FA）驗證碼、API Key 或 Token。需要協助時，應由管理員透過面板之正規流程處理，不得要求使用者提供憑證。</p>
-    <h3 id="c7-5">7.5 帳號安全要求</h3>
+    <h3 id="zht-c7-5">7.5 帳號安全要求</h3>
     <p>管理員帳號須啟用雙重驗證（2FA），使用高強度且不重複之密碼，不得與他人共用帳號，且不得於公共或不受信任之裝置登入面板。發現帳號或裝置疑似遭入侵時，應立即通報並更換所有憑證。</p>
-    <h3 id="c7-6">7.6 敏感操作紀錄</h3>
+    <h3 id="zht-c7-6">7.6 敏感操作紀錄</h3>
     <p>查看使用者檔案、停用或刪除伺服器、解除 IP 封鎖、重設或變更使用者資料等敏感操作，均應記錄原因與時間。不得刪除、竄改或規避面板活動日誌及稽核紀錄。</p>
-    <h3 id="c7-7">7.7 禁止濫用權限</h3>
+    <h3 id="zht-c7-7">7.7 禁止濫用權限</h3>
     <p>不得為自己或他人設置後門、給予超額資源或特權、私下放行違規內容、利用管理員身分規避資源限制，或將節點資源挪作私人用途（包含挖礦）。管理員同樣應遵守第 3 條及第 4 條之規定。</p>
-    <h3 id="c7-8">7.8 處置之公平性與證據</h3>
+    <h3 id="zht-c7-8">7.8 處置之公平性與證據</h3>
     <p>處置使用者應依本條款辦理，並保存相關證據（截圖、日誌及時間紀錄），不得挾怨報復、偏袒友人或私下交易。與當事人有利害關係者應迴避，改由其他管理員處理。</p>
-    <h3 id="c7-9">7.9 基礎設施機密</h3>
+    <h3 id="zht-c7-9">7.9 基礎設施機密</h3>
     <p>Wings Token、面板 API Key、資料庫密碼、<code>.env</code>、SSH 金鑰、Cloudflare Tunnel 憑證及節點內網位置等，屬機密資訊，不得公開、截圖外流或張貼於公開頻道。懷疑外洩時，應立即更換。</p>
-    <h3 id="c7-10">7.10 遠端存取與工作環境</h3>
+    <h3 id="zht-c7-10">7.10 遠端存取與工作環境</h3>
     <p>管理節點時，僅得使用經授權之方式（面板、SSH 金鑰），不得自行架設未經授權之隧道、遠端控制或代理工具。作業完成後應登出，且不得將使用者資料下載或存放於個人裝置、雲端硬碟或通訊軟體。</p>
-    <h3 id="c7-11">7.11 資安事件通報</h3>
+    <h3 id="zht-c7-11">7.11 資安事件通報</h3>
     <p>發現入侵、資料外洩、憑證遺失或其他可疑行為時，應於 24 小時內通報 Wayne，並保留現場證據。隱匿不報者，視為重大違規。</p>
-    <h3 id="c7-12">7.12 保密義務與離任</h3>
+    <h3 id="zht-c7-12">7.12 保密義務與離任</h3>
     <p>保密義務於任期屆滿後仍然有效。離任時應交還全部憑證、刪除所持有之使用者資料及截圖，並確認帳號權限已移除。</p>
-    <h3 id="c7-13">7.13 違反準則之後果</h3>
+    <h3 id="zht-c7-13">7.13 違反準則之後果</h3>
     <p>違反本條準則者，立即撤銷其管理權限；情節嚴重者，永久停權並公開處分結果；造成使用者或本服務損失者，應負賠償責任，必要時並依法追究。</p>
 
     <!-- 8 -->
-    <h2 id="s8">8. 隱私權與資料保護</h2>
+    <h2 id="zht-s8">8. 隱私權與資料保護</h2>
     <p class="lead">本章說明本服務如何蒐集、使用及保護使用者之個人資料。</p>
 
-    <h3 id="c8-1">8.1 蒐集之資料</h3>
+    <h3 id="zht-c8-1">8.1 蒐集之資料</h3>
     <p>本服務蒐集之資料包含：Discord 帳號資訊（ID、名稱、頭像）、登入時之 IP 位址、邀請與點數紀錄、伺服器資源使用量，以及面板與主機產生之活動與系統日誌。本服務不蒐集使用者無須提供之資料。</p>
-    <h3 id="c8-2">8.2 蒐集目的</h3>
+    <h3 id="zht-c8-2">8.2 蒐集目的</h3>
     <p>所蒐集之資料僅用於提供服務、防止濫用與多重帳號、處理違規與申訴、維護資訊安全及統計資源使用情形，不用於廣告或其他無關之用途。</p>
-    <h3 id="c8-3">8.3 不販售、不公開</h3>
+    <h3 id="zht-c8-3">8.3 不販售、不公開</h3>
     <p>本服務不會販售、出租或公開使用者之個人資料。除因法令要求、保護服務安全，或處理使用者與管理員間之爭議外，不會向第三方提供。</p>
-    <h3 id="c8-4">8.4 管理員查看檔案之限制</h3>
+    <h3 id="zht-c8-4">8.4 管理員查看檔案之限制</h3>
     <p>使用者之伺服器檔案、主控台及資料庫，預設為私人。管理員僅得於第 7.2 條所列情形查看，並受第 7 條全部規範拘束。</p>
-    <h3 id="c8-5">8.5 保存期限</h3>
+    <h3 id="zht-c8-5">8.5 保存期限</h3>
     <p>活動及系統日誌最長保存 90 日；帳號刪除或終止後，個人資料將於 30 日內清除。為防止遭封鎖者重新註冊，黑名單所需之最少識別資料（如 Discord ID、IP 位址）得長期保存。</p>
-    <h3 id="c8-6">8.6 使用者之權利</h3>
+    <h3 id="zht-c8-6">8.6 使用者之權利</h3>
     <p>使用者得隨時聯繫管理員，請求查詢、更正或刪除屬於其本人之個人資料；但因進行中之違規調查、資安事件或法令要求而須保留者，不在此限。</p>
-    <h3 id="c8-7">8.7 第三方服務之資料處理</h3>
+    <h3 id="zht-c8-7">8.7 第三方服務之資料處理</h3>
     <p>登入與通知須經由 Discord，連線亦可能經過 Cloudflare 等網路服務。該等第三方依其自身隱私政策處理資料，本服務無法控制。</p>
-    <h3 id="c8-8">8.8 使用者之安全責任</h3>
+    <h3 id="zht-c8-8">8.8 使用者之安全責任</h3>
     <p>請為 Discord 及相關帳號啟用雙重驗證，勿與他人共用密碼或 API Key，並定期檢查面板之 SFTP 與 API 存取情形。管理員不會向使用者索取密碼或驗證碼；遇有此類要求，請立即回報。</p>
-    <h3 id="c8-9">8.9 隱私與安全問題回報</h3>
+    <h3 id="zht-c8-9">8.9 隱私與安全問題回報</h3>
     <p>發現隱私外洩、管理員違規查看資料或任何安全漏洞者，請立即於 Discord 通報管理員。善意回報漏洞者，不被追究責任；但禁止利用漏洞取得或破壞他人資料。</p>
 
     <!-- 9 -->
-    <h2 id="s9">9. 違規處置</h2>
+    <h2 id="zht-s9">9. 違規處置</h2>
     <p class="lead">使用者違反本條款者，管理員得視情節輕重，採取下列處置之一項或數項。</p>
 
-    <h3 id="c9-1">9.1 處置方式</h3>
+    <h3 id="zht-c9-1">9.1 處置方式</h3>
     <ol>
       <li>停用違規伺服器（保留 24 小時供使用者備份，逾期永久刪除）；</li>
       <li>限制或撤銷帳號權限；</li>
       <li>刪除違規伺服器；</li>
       <li>永久註銷帳號並列入黑名單。</li>
     </ol>
-    <h3 id="c9-2">9.2 申訴</h3>
+    <h3 id="zht-c9-2">9.2 申訴</h3>
     <p>使用者如認為處置有誤，得於收到通知後 7 日內聯繫管理員提出申訴。</p>
-    <h3 id="c9-3">9.3 緊急處置與調查</h3>
+    <h3 id="zht-c9-3">9.3 緊急處置與調查</h3>
     <ul>
       <li>於維護、資安事件或緊急狀況下，管理員得不經事前通知，立即處理。</li>
       <li>調查違規或安全事件期間，管理員得暫時限制伺服器與帳號之功能。</li>
       <li>處理爭議時，得參考面板、主機及網路服務所產生之系統紀錄。</li>
     </ul>
-    <h3 id="c9-4">9.4 終止後之限制</h3>
+    <h3 id="zht-c9-4">9.4 終止後之限制</h3>
     <p>帳號遭終止後，不得以其他帳號或其他方式規避處分並重新使用本服務。</p>
-    <h3 id="c9-5">9.5 對管理人員之不當行為</h3>
+    <h3 id="zht-c9-5">9.5 對管理人員之不當行為</h3>
     <ul>
       <li>對管理員或工作人員惡意辱罵、騷擾或態度惡劣者，管理員得直接終止其帳號。</li>
       <li>對管理員或本服務威脅提告者，其帳號將直接終止；如有爭議，請先以溝通方式處理。</li>
     </ul>
-    <h3 id="c9-6">9.6 管理員違規</h3>
+    <h3 id="zht-c9-6">9.6 管理員違規</h3>
     <p>管理員違反第 7 條準則者，立即撤銷其權限，並依第 7.13 條處理。</p>
-    <h3 id="c9-7">9.7 嚴重違規與累計加重</h3>
+    <h3 id="zht-c9-7">9.7 嚴重違規與累計加重</h3>
     <p>嚴重違規（包含外洩他人隱私、入侵、攻擊）者，得不經警告直接終止帳號；同一人多次違規者，處分得累計加重。</p>
-    <h3 id="c9-8">9.8 處置通知</h3>
+    <h3 id="zht-c9-8">9.8 處置通知</h3>
     <p>處置使用者時，原則上將透過 Discord 通知當事人。</p>
 
     <!-- 10 -->
-    <h2 id="s10">10. 附則</h2>
+    <h2 id="zht-s10">10. 附則</h2>
 
-    <h3 id="c10-1">10.1 條款之修訂</h3>
+    <h3 id="zht-c10-1">10.1 條款之修訂</h3>
     <p>本條款得隨時修訂。條款更新後，使用者繼續使用本服務，即視為接受新版條款。</p>
-    <h3 id="c10-2">10.2 解釋權</h3>
+    <h3 id="zht-c10-2">10.2 解釋權</h3>
     <p>Wayne 保留本條款之最終解釋權。</p>
 
     <div class="doc-footer">最後更新於 <time datetime="2026-10-14">2026 年 10 月 14 日</time></div>
   </main>
 
-  <aside class="aside" aria-label="本頁目錄">
+  <main class="content doc" data-lang="en" lang="en">
+    <p class="crumb">Wayne Free Host / Terms of Service</p>
+    <h1>Wayne Free Host Terms of Service</h1>
+    <p class="doc-meta">Last updated: <time datetime="2026-10-14">October 14, 2026</time></p>
+
+    <div class="custom-block info">
+      <p class="title">Scope and Acceptance</p>
+      <p>Welcome to Wayne Free Host (the "Service"). The Service is a free hosting service. By registering an account or creating a server, you acknowledge that you have read, understood and agreed to these Terms in full. If you do not agree to these Terms, do not register for or use the Service.</p>
+    </div>
+
+    <!-- 1 -->
+    <h2 id="en-s1">1. Nature of the Service</h2>
+    <p class="lead">All resources provided by the Service are free of charge. The Service does not provide dedicated customer support and makes no guarantee of any kind.</p>
+
+    <h3 id="en-c1-1">1.1 Changes to the Service</h3>
+    <p>For maintenance, restructuring or discontinuation of operations, the administrator (Wayne) may change, suspend or terminate all or part of the Service at any time, without prior notice to users.</p>
+    <h3 id="en-c1-2">1.2 No Availability Guarantee</h3>
+    <p>The Service does not guarantee round-the-clock or uninterrupted operation and does not offer an enterprise-grade service level agreement (SLA). Assistance in the Discord community is provided by members on a mutual-help basis.</p>
+    <h3 id="en-c1-3">1.3 Maintenance and Force Majeure</h3>
+    <p>The Service may be suspended for maintenance. The administrator will make reasonable efforts to give advance notice and to finish within the planned time. The Service is not liable for service interruptions or data loss caused by maintenance, power outages, network failures, natural disasters or other factors beyond its control.</p>
+
+    <!-- 2 -->
+    <h2 id="en-s2">2. Accounts and Security</h2>
+    <p class="lead">To keep the Service fair and secure, users must comply with the following account and information security requirements.</p>
+
+    <h3 id="en-c2-1">2.1 One Account per Person</h3>
+    <p>Each user may register and use only one account and may not create multiple accounts to obtain additional resources. Where multiple accounts are confirmed, all related accounts will be permanently banned.</p>
+    <h3 id="en-c2-2">2.2 Responsibility for Your Account</h3>
+    <p>Users must keep their account credentials secure. All actions taken through an account are deemed to be the actions of the account holder, who is responsible for them.</p>
+    <h3 id="en-c2-3">2.3 Automatic Protection Against Failed Logins</h3>
+    <p>The system has an automatic protection mechanism: if a wrong password is entered three consecutive times on a VPS, the source IP address will be blocked automatically. If you are blocked by mistake, contact the administrator to request removal of the block.</p>
+    <h3 id="en-c2-4">2.4 No Transfer or Resale</h3>
+    <p>Without the administrator's consent, you may not transfer, rent out or resell your account or server, or share it with others.</p>
+
+    <!-- 3 -->
+    <h2 id="en-s3">3. Resource Quotas and Usage Limits</h2>
+    <p class="lead">Because resources are limited, users must use them reasonably and must not affect the rights of other users.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>Regular users</th><th>Administrators</th></tr></thead>
+        <tbody>
+          <tr><td>Servers running at the same time</td><td>Up to 5</td><td>Up to 10</td></tr>
+          <tr><td>CPU (per server)</td><td>Up to 20%</td><td>Unlimited</td></tr>
+          <tr><td>RAM (per server)</td><td>Up to 512 MB</td><td>Unlimited</td></tr>
+          <tr><td>Disk space (per server)</td><td>Up to 1 GB</td><td>Configured separately</td></tr>
+          <tr><td>Backups / databases / network ports (per server)</td><td colspan="2">Up to 1 backup / 1 database / 2 ports (Allocations)</td></tr>
+          <tr><td>Total files / single file size (per server)</td><td colspan="2">No more than 50,000 files / 500 MB</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="en-c3-1">3.1 Number of Servers</h3>
+    <p>Regular users may run up to 5 servers at the same time; administrators may run up to 10.</p>
+    <h3 id="en-c3-2">3.2 Compute Quotas</h3>
+    <p>Each server of a regular user is limited to 20% CPU and 512 MB RAM. Administrators are not subject to this limit.</p>
+    <h3 id="en-c3-3">3.3 CPU Usage Limit</h3>
+    <p>A server's CPU usage must not stay above 80% for an extended period within any one hour. In serious cases, the system may throttle the server or shut it down by force.</p>
+    <h3 id="en-c3-4">3.4 Disk Space Limit</h3>
+    <p>Each server of a regular user is limited to 1 GB of disk space (the Disk value in the Pterodactyl panel); administrators are configured separately. All files in a server, including world saves, logs, temporary files, mods, <code>node_modules</code> and backups, count toward usage, and the figure shown in the panel is authoritative.</p>
+    <h3 id="en-c3-5">3.5 Exceeding the Disk Quota</h3>
+    <p>When disk usage exceeds the limit, the panel may prevent the server from starting or block uploads and writes, which may corrupt or destroy saved data. Users must clean up within 48 hours of receiving notice. After that, the administrator may delete the excess files directly (logs, temporary files and backups first) or disable the server. The Service is not liable for any data corruption or loss caused by exceeding the quota.</p>
+    <h3 id="en-c3-6">3.6 No Circumventing Disk Limits</h3>
+    <p>You may not bypass the disk quota by using symbolic links, mounting external storage, placing data outside the container, falsifying file sizes or any other method. Doing so is treated as a violation of Section 4.10, and the server will be disabled.</p>
+    <h3 id="en-c3-7">3.7 Backups, Databases and Ports</h3>
+    <p>Each server may have up to 1 backup, 1 database and 2 network ports (Allocations).</p>
+    <div class="custom-block warning">
+      <p class="title">Backup Reminder</p>
+      <p>Backups stored in the panel are not off-site backups. Download backup files to your own device and keep them there regularly.</p>
+    </div>
+    <h3 id="en-c3-8">3.8 File Count, File Size and Bandwidth</h3>
+    <p>A single server may not contain more than 50,000 files, and a single file may not exceed 500 MB. If disk I/O or network bandwidth stays abnormally high for an extended period and affects other users, the administrator may require you to clean up, throttle the server or disable it.</p>
+
+    <!-- 4 -->
+    <h2 id="en-s4">4. Prohibited Conduct</h2>
+    <p class="lead">The following conduct is prohibited in all cases. The administrator may act against violations under Section 9.</p>
+
+    <h3 id="en-c4-1">4.1 Cryptocurrency Mining</h3>
+    <p>Running any cryptocurrency mining program (for example <code>XMRig</code>) is prohibited. Accounts detected by the system will be banned immediately, without further notice or negotiation.</p>
+    <h3 id="en-c4-2">4.2 Malicious Attacks and Crawlers</h3>
+    <p>You may not use the Service to launch distributed denial-of-service (DDoS) attacks, network scans or flood attacks, or to run high-frequency malicious crawlers.</p>
+    <h3 id="en-c4-3">4.3 Malicious Software</h3>
+    <p>You may not store or run trojans, viruses, ransomware or any remote-control backdoor.</p>
+    <h3 id="en-c4-4">4.4 High-Risk Tunneling Tools</h3>
+    <div class="custom-block danger">
+      <p class="title">Key Rule</p>
+      <p>For security, you may not set up high-risk tunneling tools inside a container without authorization, such as <code>sshx</code>, <code>tmate</code>, or unauthorized <code>ngrok</code> and <code>cloudflared</code>. Violating servers will be disabled.</p>
+    </div>
+    <h3 id="en-c4-5">4.5 Operating System Images</h3>
+    <p>You may not download, install or run a full Linux, Windows or other operating system image, ISO or rootfs inside a container, and may not create nested virtual machines or containers. Downloading packages that an ordinary application needs to run is not restricted.</p>
+    <h3 id="en-c4-6">4.6 Pornographic and Illegal Content</h3>
+    <p>Any pornographic content (including AI-generated pornography and adult websites) and any other content that violates the law is prohibited.</p>
+    <h3 id="en-c4-7">4.7 Abuse of Storage and Bandwidth</h3>
+    <p>You may not use the Service for public file sharing, distribution of pirated material, proxy forwarding, mass download sites or any other purpose that consumes large amounts of storage or bandwidth over a long period.</p>
+    <h3 id="en-c4-8">4.8 Unauthorized Access</h3>
+    <p>You may not attempt to log in to, read, modify or damage the data or functions of other users, servers, the panel or the host system.</p>
+    <h3 id="en-c4-9">4.9 Spam and Mass Automated Requests</h3>
+    <p>You may not send spam, create accounts in bulk, flood channels, send harassing messages, or use programs to send continuous high-frequency requests that affect the stability of the Service.</p>
+    <h3 id="en-c4-10">4.10 Circumventing Resource Limits</h3>
+    <p>You may not circumvent limits on the number of servers, CPU, memory, bandwidth or other resources by using multiple accounts, disguising processes, exploiting vulnerabilities or any other method.</p>
+    <h3 id="en-c4-11">4.11 Piracy, Cracks and P2P Downloads</h3>
+    <p>You may not store or distribute pirated software, cracking tools or ROMs. You may not download or seed with BitTorrent or other P2P tools. Websites that provide links to, or tutorials for, such content are also prohibited.</p>
+    <h3 id="en-c4-12">4.12 Proxies and IRC</h3>
+    <p>You may not set up proxy or VPN relay nodes, or create or connect to IRC network servers. For a first violation, the server will be disabled; for a repeat violation, the account will be terminated.</p>
+    <h3 id="en-c4-13">4.13 False and Defamatory Content</h3>
+    <p>You may not host websites or services used to spread false information or to defame or damage the reputation of individuals, groups or companies.</p>
+    <h3 id="en-c4-14">4.14 Impersonation and Social Engineering</h3>
+    <p>You may not impersonate administrators, staff or other users, or obtain another person's password, verification code, token or permissions by any means of deception.</p>
+    <h3 id="en-c4-15">4.15 Violating Others' Privacy</h3>
+    <p>You may not collect, publish or trade other people's personal data (including doxxing and leaking screenshots of Discord direct messages or conversations with administrators), or host websites or programs on a server that collect personal data without the person's consent.</p>
+    <h3 id="en-c4-16">4.16 Abuse of the Panel and API</h3>
+    <p>You may not brute-force logins, abuse the panel API or SFTP, repeatedly create and delete servers in a short time, or probe the panel or nodes for vulnerabilities in any way.</p>
+    <h3 id="en-c4-17">4.17 Leaking Credentials and Sensitive Data</h3>
+    <p>You may not publish or post in public places panel credentials, API keys, SFTP passwords, tokens or the contents of <code>.env</code> files. Users are solely responsible for any consequences of credentials being misused as a result.</p>
+
+    <!-- 5 -->
+    <h2 id="en-s5">5. Idle and Reclamation Rules</h2>
+    <p class="lead">Users must use their servers regularly and keep them in working condition.</p>
+
+    <h3 id="en-c5-1">5.1 No Activity Within Seven Days of Creation</h3>
+    <p>If a server has no startup, login, deployment or other activity within 7 days of creation, the administrator may delete it directly. Requests to retrieve or restore data will not be accepted.</p>
+    <h3 id="en-c5-2">5.2 No Startup or Activity for Fifteen Days</h3>
+    <p>If a server has not been started and has had no activity for more than 15 consecutive days, the administrator may shut it down. This rule does not apply while the server is currently running.</p>
+    <h3 id="en-c5-3">5.3 Responsibility for Backups</h3>
+    <p>Users should regularly download backups of important data (for example Minecraft world files or website source code). The Service is not liable for compensation or recovery if data is lost because a server is deleted, shut down or malfunctions.</p>
+
+    <!-- 6 -->
+    <h2 id="en-s6">6. Data Security and Liability</h2>
+    <p class="lead">This section sets out data security, the scope of compensation and the allocation of responsibility between the parties.</p>
+
+    <h3 id="en-c6-1">6.1 Data Exposure at Your Own Risk</h3>
+    <p>The Service is a free host and offers no enterprise-grade data protection. Users must assess and bear the related risks themselves.</p>
+    <h3 id="en-c6-2">6.2 Compensation for External Attacks</h3>
+    <p>If a server is affected by an external attack, the Service will only help restore virtual content (for example Minecraft builds and saves) where feasible, and does not guarantee full recovery.</p>
+    <h3 id="en-c6-3">6.3 No Monetary Compensation</h3>
+    <div class="custom-block warning">
+      <p class="title">Please Note</p>
+      <p>The Service is free of charge and does not accept claims for monetary, cash or business-loss compensation of any kind. Users must agree to this rule in order to use the Service.</p>
+    </div>
+    <h3 id="en-c6-4">6.4 Third-Party Services</h3>
+    <p>Running a server may require third-party networks, domains, packages, APIs or other external services. The availability, fees, rules and data handling of those services are the responsibility of their providers.</p>
+    <h3 id="en-c6-5">6.5 User Content and Legal Responsibility</h3>
+    <p>Users must ensure that the content they upload, publish or run does not infringe the rights of others and complies with applicable law. Users are solely responsible for disputes and liability arising from their content or conduct.</p>
+    <h3 id="en-c6-6">6.6 Reporting Security Incidents</h3>
+    <p>If you discover that an account has been compromised, data has been leaked or there is another security problem, notify the administrator as soon as possible and provide the necessary information so that it can be investigated and handled.</p>
+    <h3 id="en-c6-7">6.7 Compensation for Losses Caused by Violations</h3>
+    <p>If Wayne Free Host or a third party suffers loss, faces a claim or incurs legal costs because a user violated these Terms, that user must compensate for them and cooperate in handling the matter.</p>
+
+    <!-- 7 -->
+    <h2 id="en-s7">7. Code of Conduct for Administrators on Privacy and Security</h2>
+    <p class="lead">Administrators and staff who assist with administration hold higher system privileges, so stricter rules apply to them than to regular users.</p>
+
+    <h3 id="en-c7-1">7.1 Principle of Least Privilege</h3>
+    <p>Administrators and staff receive only the minimum privileges necessary to perform their duties. When their role changes or they leave the team, their permissions, API keys and SSH keys must be revoked immediately.</p>
+    <h3 id="en-c7-2">7.2 No Viewing of User Data Without Justification</h3>
+    <p>Without a legitimate reason, you may not view a user's files, console, databases, logs or messages. Access is permitted only in the following cases, and only to the minimum extent necessary for the matter at hand:</p>
+    <ol>
+      <li>Handling a report;</li>
+      <li>Investigating a violation or security incident;</li>
+      <li>Where necessary for system maintenance;</li>
+      <li>When the user personally requests assistance.</li>
+    </ol>
+    <h3 id="en-c7-3">7.3 No Leaking, Forwarding or Selling</h3>
+    <p>Any data obtained in the course of administration (including Discord IDs, email addresses, IP addresses, file contents, passwords, logs, screenshots and conversations) may not be copied, forwarded, published or sold, or used for any purpose other than administration. This obligation continues after departure.</p>
+    <h3 id="en-c7-4">7.4 No Requests for Credentials</h3>
+    <p>Administrators must not, and will not, ask users for passwords, two-factor authentication (2FA) codes, API keys or tokens. When help is needed, administrators must use the panel's proper procedures and may not ask users to provide credentials.</p>
+    <h3 id="en-c7-5">7.5 Account Security Requirements</h3>
+    <p>Administrator accounts must have two-factor authentication (2FA) enabled, use strong and unique passwords, must not be shared with others, and must not be used to log in to the panel from public or untrusted devices. If an account or device is suspected to be compromised, report it immediately and replace all credentials.</p>
+    <h3 id="en-c7-6">7.6 Logging of Sensitive Operations</h3>
+    <p>Sensitive operations, such as viewing user files, disabling or deleting servers, removing IP blocks, and resetting or changing user data, must be recorded with the reason and time. Panel activity logs and audit records may not be deleted, altered or bypassed.</p>
+    <h3 id="en-c7-7">7.7 No Abuse of Privileges</h3>
+    <p>You may not create backdoors for yourself or others, grant excess resources or privileges, quietly permit violating content, use administrator status to bypass resource limits, or divert node resources to private use (including mining). Administrators must also comply with Sections 3 and 4.</p>
+    <h3 id="en-c7-8">7.8 Fair Action Supported by Evidence</h3>
+    <p>Action against users must follow these Terms, and evidence (screenshots, logs and timestamps) must be kept. Administrators may not act out of a grudge, show favoritism to friends or make private deals. Where an administrator has a personal interest in the matter, they must recuse themselves and leave it to another administrator.</p>
+    <h3 id="en-c7-9">7.9 Infrastructure Secrets</h3>
+    <p>Wings tokens, panel API keys, database passwords, <code>.env</code> files, SSH keys, Cloudflare Tunnel credentials and the internal network locations of nodes are confidential and may not be published, leaked in screenshots or posted in public channels. If a leak is suspected, they must be replaced immediately.</p>
+    <h3 id="en-c7-10">7.10 Remote Access and Working Environment</h3>
+    <p>When managing nodes, only authorized methods (the panel and SSH keys) may be used. You may not set up unauthorized tunnels, remote control or proxy tools. Log out when finished, and do not download or store user data on personal devices, cloud drives or messaging apps.</p>
+    <h3 id="en-c7-11">7.11 Reporting Security Incidents</h3>
+    <p>If you discover an intrusion, data leak, lost credentials or other suspicious activity, you must report it to Wayne within 24 hours and preserve the evidence. Concealing an incident is treated as a serious violation.</p>
+    <h3 id="en-c7-12">7.12 Confidentiality and Departure</h3>
+    <p>The duty of confidentiality continues after the term ends. On departure, you must return all credentials, delete any user data and screenshots you hold, and confirm that your account permissions have been removed.</p>
+    <h3 id="en-c7-13">7.13 Consequences of Violating This Code</h3>
+    <p>Anyone who violates this code will have their administrator privileges revoked immediately. In serious cases, they will be permanently banned and the disciplinary result may be made public. Anyone who causes loss to users or the Service must compensate for it, and legal action may be taken where necessary.</p>
+
+    <!-- 8 -->
+    <h2 id="en-s8">8. Privacy and Data Protection</h2>
+    <p class="lead">This section explains how the Service collects, uses and protects users' personal data.</p>
+
+    <h3 id="en-c8-1">8.1 Data Collected</h3>
+    <p>The data collected includes: Discord account information (ID, name, avatar), the IP address at login, invitation and points records, server resource usage, and the activity and system logs generated by the panel and the host. The Service does not collect data that users are not required to provide.</p>
+    <h3 id="en-c8-2">8.2 Purposes of Collection</h3>
+    <p>The data collected is used only to provide the Service, prevent abuse and multiple accounts, handle violations and appeals, maintain information security and compile resource usage statistics. It is not used for advertising or any unrelated purpose.</p>
+    <h3 id="en-c8-3">8.3 No Sale, No Disclosure</h3>
+    <p>The Service will not sell, rent or publish users' personal data. It will not be provided to third parties except as required by law, to protect the security of the Service, or to resolve disputes between a user and an administrator.</p>
+    <h3 id="en-c8-4">8.4 Limits on Administrators Viewing Files</h3>
+    <p>A user's server files, console and databases are private by default. Administrators may view them only in the cases listed in Section 7.2, and are bound by all of Section 7.</p>
+    <h3 id="en-c8-5">8.5 Retention Period</h3>
+    <p>Activity and system logs are kept for up to 90 days. After an account is deleted or terminated, personal data will be erased within 30 days. To prevent banned users from registering again, the minimum identifying data needed for the blacklist (such as Discord ID and IP address) may be kept long term.</p>
+    <h3 id="en-c8-6">8.6 Your Rights</h3>
+    <p>You may contact an administrator at any time to request access to, correction of or deletion of your own personal data, except for data that must be kept for an ongoing investigation of a violation, a security incident or a legal requirement.</p>
+    <h3 id="en-c8-7">8.7 Data Handled by Third-Party Services</h3>
+    <p>Login and notifications go through Discord, and connections may pass through network services such as Cloudflare. These third parties process data under their own privacy policies, which the Service cannot control.</p>
+    <h3 id="en-c8-8">8.8 Users' Own Security Responsibilities</h3>
+    <p>Enable two-factor authentication on your Discord and related accounts, do not share passwords or API keys with others, and regularly review SFTP and API access in the panel. Administrators will not ask you for passwords or verification codes. If anyone asks, report it immediately.</p>
+    <h3 id="en-c8-9">8.9 Reporting Privacy and Security Issues</h3>
+    <p>If you discover a privacy leak, an administrator viewing data in violation of these Terms, or any security vulnerability, report it to an administrator on Discord immediately. People who report vulnerabilities in good faith will not be held liable, but using a vulnerability to obtain or damage others' data is prohibited.</p>
+
+    <!-- 9 -->
+    <h2 id="en-s9">9. Enforcement</h2>
+    <p class="lead">If a user violates these Terms, the administrator may take one or more of the following actions, depending on the seriousness of the violation.</p>
+
+    <h3 id="en-c9-1">9.1 Actions</h3>
+    <ol>
+      <li>Disable the violating server (kept for 24 hours so the user can back up, then permanently deleted);</li>
+      <li>Restrict or revoke account permissions;</li>
+      <li>Delete the violating server;</li>
+      <li>Permanently terminate the account and add it to the blacklist.</li>
+    </ol>
+    <h3 id="en-c9-2">9.2 Appeals</h3>
+    <p>If you believe an action was mistaken, you may contact an administrator to file an appeal within 7 days of receiving the notice.</p>
+    <h3 id="en-c9-3">9.3 Emergency Action and Investigations</h3>
+    <ul>
+      <li>During maintenance, security incidents or emergencies, the administrator may act immediately without prior notice.</li>
+      <li>While investigating a violation or security incident, the administrator may temporarily restrict the functions of servers and accounts.</li>
+      <li>In resolving disputes, system records generated by the panel, hosts and network services may be consulted.</li>
+    </ul>
+    <h3 id="en-c9-4">9.4 Restrictions After Termination</h3>
+    <p>After an account is terminated, you may not use another account or any other means to evade the penalty and resume using the Service.</p>
+    <h3 id="en-c9-5">9.5 Misconduct Toward Administrators</h3>
+    <ul>
+      <li>An administrator may terminate the account of anyone who maliciously insults or harasses administrators or staff, or behaves abusively toward them.</li>
+      <li>The account of anyone who threatens administrators or the Service with legal action will be terminated directly. If you have a dispute, please try to resolve it through communication first.</li>
+    </ul>
+    <h3 id="en-c9-6">9.6 Administrator Violations</h3>
+    <p>An administrator who violates the code in Section 7 will have their privileges revoked immediately and will be dealt with under Section 7.13.</p>
+    <h3 id="en-c9-7">9.7 Serious Violations and Cumulative Penalties</h3>
+    <p>For serious violations (including leaking others' privacy, intrusion and attacks), the account may be terminated without warning. For repeated violations by the same person, penalties may be increased cumulatively.</p>
+    <h3 id="en-c9-8">9.8 Notice of Action</h3>
+    <p>When action is taken against a user, the person concerned will, in principle, be notified through Discord.</p>
+
+    <!-- 10 -->
+    <h2 id="en-s10">10. Supplementary Provisions</h2>
+
+    <h3 id="en-c10-1">10.1 Amendments</h3>
+    <p>These Terms may be amended at any time. If you continue to use the Service after the Terms are updated, you are deemed to have accepted the new version.</p>
+    <h3 id="en-c10-2">10.2 Final Interpretation</h3>
+    <p>Wayne reserves the right of final interpretation of these Terms.</p>
+
+    <div class="doc-footer">Last updated on <time datetime="2026-10-14">October 14, 2026</time></div>
+  </main>
+
+  <main class="content doc" data-lang="zh-Hans" lang="zh-Hans">
+    <p class="crumb">Wayne Free Host / 服务条款</p>
+    <h1>Wayne Free Host 服务条款</h1>
+    <p class="doc-meta">更新日期：<time datetime="2026-10-14">2026 年 10 月 14 日</time></p>
+
+    <div class="custom-block info">
+      <p class="title">适用范围与同意</p>
+      <p>欢迎使用 Wayne Free Host（以下简称“本服务”）。本服务为免费提供之主机服务，用户完成注册或创建服务器，即视为已阅读、了解并同意本条款之全部内容。如不同意本条款，请勿注册或使用本服务。</p>
+    </div>
+
+    <!-- 1 -->
+    <h2 id="zhs-s1">1. 服务性质</h2>
+    <p class="lead">本服务所提供之全部资源均为免费性质，不提供专人客服，亦不提供任何形式之服务保证。</p>
+
+    <h3 id="zhs-c1-1">1.1 服务内容之调整</h3>
+    <p>基于维护、重组或终止营运之需要，管理员（Wayne）得随时变更、暂停或终止本服务之全部或一部，且无需事先通知用户。</p>
+    <h3 id="zhs-c1-2">1.2 不保证服务可用性</h3>
+    <p>本服务不保证全年无休或不中断运作，亦不提供企业等级之服务水准协议（SLA）。Discord 社区中之协助，属成员间之互助性质。</p>
+    <h3 id="zhs-c1-3">1.3 维护与不可抗力</h3>
+    <p>本服务可能因维护需要而暂停，管理员将尽力事先通知，并于预定时间内完成。因维护、停电、网络中断、天灾或其他无法控制之因素，所致之服务中断或数据损失，本服务不负赔偿责任。</p>
+
+    <!-- 2 -->
+    <h2 id="zhs-s2">2. 账号与安全管理</h2>
+    <p class="lead">为确保使用之公平性与服务之安全，用户应遵守下列账号与信息安全要求。</p>
+
+    <h3 id="zhs-c2-1">2.1 每人限一账号</h3>
+    <p>每位用户限注册并使用一个账号，不得以创建多个账号之方式取得额外资源。经查证有多重账号者，相关账号将一并永久封禁。</p>
+    <h3 id="zhs-c2-2">2.2 账号保管责任</h3>
+    <p>用户应妥善保管其账号与密码。以该账号进行之一切行为，均视为用户本人之行为，并由用户负责。</p>
+    <h3 id="zhs-c2-3">2.3 登录失败之自动防护</h3>
+    <p>系统设有自动防护机制：VPS 连续三次输入错误密码者，其来源 IP 地址将遭自动封锁。如因误操作遭封锁，请联系管理员申请解除。</p>
+    <h3 id="zhs-c2-4">2.4 禁止转让与转售</h3>
+    <p>未经管理员同意，不得将账号或服务器转让、出租、转售，或提供他人共同使用。</p>
+
+    <!-- 3 -->
+    <h2 id="zhs-s3">3. 资源配额与使用限制</h2>
+    <p class="lead">由于资源有限，用户应合理使用，不得影响其他用户之权益。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>项目</th><th>一般用户</th><th>管理员</th></tr></thead>
+        <tbody>
+          <tr><td>同时运行之服务器数量</td><td>最多 5 台</td><td>最多 10 台</td></tr>
+          <tr><td>CPU（每台）</td><td>上限 20%</td><td>不限制</td></tr>
+          <tr><td>内存 RAM（每台）</td><td>上限 512 MB</td><td>不限制</td></tr>
+          <tr><td>磁盘空间（每台）</td><td>上限 1 GB</td><td>另行配置</td></tr>
+          <tr><td>备份／数据库／网络端口（每台）</td><td colspan="2">各最多 1 份／1 个／2 个（Allocation）</td></tr>
+          <tr><td>文件总数／单个文件大小（每台）</td><td colspan="2">不得超过 50,000 个／500 MB</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 id="zhs-c3-1">3.1 服务器数量</h3>
+    <p>一般用户同时最多可打开 5 台服务器；管理员最多 10 台。</p>
+    <h3 id="zhs-c3-2">3.2 计算资源配额</h3>
+    <p>一般用户每台服务器之上限为 CPU 20%、RAM 512 MB；管理员不在此限。</p>
+    <h3 id="zhs-c3-3">3.3 CPU 使用限制</h3>
+    <p>服务器之 CPU 使用率于一小时内，不得长时间维持于 80% 以上。情节严重者，系统得降低其性能或强制关机。</p>
+    <h3 id="zhs-c3-4">3.4 磁盘空间上限</h3>
+    <p>一般用户每台服务器之磁盘空间（Pterodactyl 面板之 Disk）上限为 1 GB，管理员另行配置。服务器内所有文件，包含世界存档、日志、临时文件、模块、<code>node_modules</code> 及备份文件，均计入用量，并以面板显示之数据为准。</p>
+    <h3 id="zhs-c3-5">3.5 超过磁盘配额之处理</h3>
+    <p>磁盘用量超过上限时，面板得阻止服务器启动、无法上传或写入文件，并可能导致存档损毁或遗失。用户应于收到通知后 48 小时内自行清理；逾期者，管理员得直接删除超额文件（优先处理日志、临时文件及备份）或停用服务器。因超额造成之数据损毁或遗失，本服务不负任何责任。</p>
+    <h3 id="zhs-c3-6">3.6 禁止规避磁盘限制</h3>
+    <p>禁止以符号链接（symlink）、挂载外部存储、将数据置于容器以外之位置、伪造文件大小或其他方式规避磁盘配额。违者视同违反第 4.10 条，并将停用其服务器。</p>
+    <h3 id="zhs-c3-7">3.7 备份、数据库与端口</h3>
+    <p>每台服务器最多得设置 1 份备份、1 个数据库及 2 个网络端口（Allocation）。</p>
+    <div class="custom-block warning">
+      <p class="title">备份提醒</p>
+      <p>面板上之备份不属于异地备份。请定期将备份文件下载至个人设备自行保存。</p>
+    </div>
+    <h3 id="zhs-c3-8">3.8 文件数量、单个文件大小与带宽</h3>
+    <p>单一服务器之文件总数不得超过 50,000 个，单一文件不得超过 500 MB。磁盘 I/O 或网络带宽长时间异常偏高并影响其他用户时，管理员得要求清理、限速或停用服务器。</p>
+
+    <!-- 4 -->
+    <h2 id="zhs-s4">4. 禁止行为</h2>
+    <p class="lead">下列行为一律禁止。违反者，管理员得依第 9 条迳行处置。</p>
+
+    <h3 id="zhs-c4-1">4.1 加密货币挖矿</h3>
+    <p>禁止运行任何加密货币挖矿程序（例如 <code>XMRig</code>）。经系统侦测者，立即封禁账号，不另行通知或协商。</p>
+    <h3 id="zhs-c4-2">4.2 恶意攻击与爬虫</h3>
+    <p>禁止利用本服务发动分布式阻断服务（DDoS）攻击、网络扫描、洪水攻击，或进行高频率之恶意爬虫。</p>
+    <h3 id="zhs-c4-3">4.3 恶意程序</h3>
+    <p>禁止存放或运行木马、病毒、勒索软件，或任何远程控制后门程序。</p>
+    <h3 id="zhs-c4-4">4.4 高风险内网穿透工具</h3>
+    <div class="custom-block danger">
+      <p class="title">重点规定</p>
+      <p>为确保安全，禁止于容器内擅自架设 <code>sshx</code>、<code>tmate</code>，或未经授权之 <code>ngrok</code>、<code>cloudflared</code> 等高风险隧道工具。违者将停用其服务器。</p>
+    </div>
+    <h3 id="zhs-c4-5">4.5 操作系统映像</h3>
+    <p>禁止于容器内下载、安装或运行完整之 Linux、Windows 或其他操作系统映像、ISO、rootfs，亦禁止于容器内置立嵌套虚拟机或容器。一般应用程序运作所需之套件下载，不在此限。</p>
+    <h3 id="zhs-c4-6">4.6 色情与违法内容</h3>
+    <p>禁止任何色情内容（包含 AI 生成之色情内容、成人网站等）及其他违反法令之内容。</p>
+    <h3 id="zhs-c4-7">4.7 滥用存储与带宽</h3>
+    <p>禁止将本服务作为公开文件分享、盗版散布、代理转发、大量下载站，或其他长时间大量占用存储空间与带宽之用途。</p>
+    <h3 id="zhs-c4-8">4.8 未经授权之访问</h3>
+    <p>禁止尝试登录、读取、修改或破坏其他用户、服务器、面板或主机系统之数据与功能。</p>
+    <h3 id="zhs-c4-9">4.9 垃圾消息与大量自动化请求</h3>
+    <p>禁止发送垃圾邮件、大量创建账号、刷屏、发送骚扰消息，或以程序持续发送足以影响服务稳定性之高频率请求。</p>
+    <h3 id="zhs-c4-10">4.10 规避资源限制</h3>
+    <p>禁止以多开账号、进程伪装、利用漏洞或其他方式，规避服务器数量、CPU、内存及带宽等资源限制。</p>
+    <h3 id="zhs-c4-11">4.11 盗版、破解与 P2P 下载</h3>
+    <p>禁止存放或散布盗版软件、破解工具及 ROM；禁止使用 BitTorrent 等 P2P 工具下载或做种；提供前述内容之链接或教学之网站，亦在禁止之列。</p>
+    <h3 id="zhs-c4-12">4.12 代理与 IRC</h3>
+    <p>禁止架设代理（Proxy）或 VPN 转发节点，亦禁止创建或连接 IRC 网络服务器。初次违反者，停用其服务器；再次违反者，终止其账号。</p>
+    <h3 id="zhs-c4-13">4.13 不实与诽谤内容</h3>
+    <p>禁止架设用于散布不实信息，或诽谤、毁损个人、团体、企业名誉之网站与服务。</p>
+    <h3 id="zhs-c4-14">4.14 冒充与社交工程</h3>
+    <p>禁止冒充管理员、工作人员或其他用户，亦禁止以任何方式诈取他人之密码、验证码、Token 或权限。</p>
+    <h3 id="zhs-c4-15">4.15 侵害他人隐私</h3>
+    <p>禁止搜集、公开或交易他人之个人数据（包含人肉搜索，以及将 Discord 私讯与管理员对话截图外流），亦禁止于服务器上架设未经当事人同意而搜集个人数据之网站或程序。</p>
+    <h3 id="zhs-c4-16">4.16 滥用面板与 API</h3>
+    <p>禁止暴力尝试登录、滥用面板 API 或 SFTP、短时间内反复创建与删除服务器，或以任何方式探测面板与节点之漏洞。</p>
+    <h3 id="zhs-c4-17">4.17 外泄凭证与敏感数据</h3>
+    <p>禁止将面板账号密码、API Key、SFTP 密码、Token 或 <code>.env</code> 之内容公开或张贴于公开场合。因此遭盗用所造成之后果，由用户自行负责。</p>
+
+    <!-- 5 -->
+    <h2 id="zhs-s5">5. 闲置与回收规则</h2>
+    <p class="lead">用户应定期使用并维持服务器之运作状态。</p>
+
+    <h3 id="zhs-c5-1">5.1 创建后七日内无操作</h3>
+    <p>服务器创建后 7 日内，未有开机、登录、部署或其他操作者，管理员得直接删除该服务器，且不受理任何数据取回或复原之请求。</p>
+    <h3 id="zhs-c5-2">5.2 连续十五日未开机或操作</h3>
+    <p>服务器连续超过 15 日未开机或未有任何操作者，管理员得关闭该服务器；惟服务器目前处于开机运作状态者，本项规定不适用。</p>
+    <h3 id="zhs-c5-3">5.3 数据备份责任</h3>
+    <p>重要数据（例如 Minecraft 世界文件、网站原代码）请用户自行定期下载备份。因服务器遭删除、关闭或故障而致数据遗失者，本服务不负赔偿或复原责任。</p>
+
+    <!-- 6 -->
+    <h2 id="zhs-s6">6. 数据安全与责任</h2>
+    <p class="lead">本章规范数据安全、赔偿范围及双方之责任划分。</p>
+
+    <h3 id="zhs-c6-1">6.1 数据外泄风险自负</h3>
+    <p>本服务为免费主机，不提供企业等级之数据保护保证，用户应自行评估并承担相关风险。</p>
+    <h3 id="zhs-c6-2">6.2 遭受外部攻击之补偿范围</h3>
+    <p>服务器遭外部攻击而发生问题时，本服务仅于可行范围内协助恢复虚拟内容（例如 Minecraft 建筑存档），不保证能完整恢复。</p>
+    <h3 id="zhs-c6-3">6.3 不受理金钱赔偿</h3>
+    <div class="custom-block warning">
+      <p class="title">请特别留意</p>
+      <p>本服务为免费性质，不受理任何形式之金钱、现金或营业损失赔偿请求。用户须同意此项规定，始得使用本服务。</p>
+    </div>
+    <h3 id="zhs-c6-4">6.4 第三方服务</h3>
+    <p>服务器运作可能须使用第三方网络、网域、套件、API 或其他外部服务。该等服务之可用性、费用、规则及数据处理方式，由其服务提供者负责。</p>
+    <h3 id="zhs-c6-5">6.5 用户内容与法律责任</h3>
+    <p>用户应确保其上传、发布或运行之内容未侵害他人权利，并符合适用之法令。因用户之内容或行为所生之争议与责任，由用户自行负责。</p>
+    <h3 id="zhs-c6-6">6.6 资安事件通报</h3>
+    <p>发现账号遭盗用、数据外泄或其他安全问题时，请尽速通知管理员并提供必要信息，以利调查与处理。</p>
+    <h3 id="zhs-c6-7">6.7 违规损失之赔偿</h3>
+    <p>因用户违反本条款，致 Wayne Free Host 或第三方受有损失、遭受求偿或支出法律费用者，用户应负赔偿责任，并配合处理。</p>
+
+    <!-- 7 -->
+    <h2 id="zhs-s7">7. 管理人员隐私与安全行为准则</h2>
+    <p class="lead">管理员及协助管理之工作人员掌握较高之系统权限，因此适用较一般用户更为严格之规范。</p>
+
+    <h3 id="zhs-c7-1">7.1 最小权限原则</h3>
+    <p>管理员及工作人员仅取得运行职务所必需之最低权限。职务异动或离开团队时，其权限、API Key 及 SSH 密钥应立即撤销。</p>
+    <h3 id="zhs-c7-2">7.2 禁止无正当理由查看用户数据</h3>
+    <p>无正当理由者，不得查看用户之文件、控制台、数据库、日志或消息。仅于下列情形得进行访问，且范围以处理事项所需之最小范围为限：</p>
+    <ol>
+      <li>处理检举；</li>
+      <li>调查违规或资安事件；</li>
+      <li>系统维护所必需；</li>
+      <li>用户本人要求协助。</li>
+    </ol>
+    <h3 id="zhs-c7-3">7.3 禁止外泄、转传或贩售</h3>
+    <p>于管理过程中取得之任何数据（包含 Discord ID、电子邮件、IP 地址、文件内容、密码、日志、截图及对话），不得拷贝、转传、公开、贩售，或用于管理以外之目的。离任后仍负相同义务。</p>
+    <h3 id="zhs-c7-4">7.4 禁止索取凭证</h3>
+    <p>管理员不得、亦不会向用户索取密码、双重验证（2FA）验证码、API Key 或 Token。需要协助时，应由管理员通过面板之正规流程处理，不得要求用户提供凭证。</p>
+    <h3 id="zhs-c7-5">7.5 账号安全要求</h3>
+    <p>管理员账号须启用双重验证（2FA），使用高强度且不重复之密码，不得与他人共用账号，且不得于公共或不受信任之设备登录面板。发现账号或设备疑似遭入侵时，应立即通报并更换所有凭证。</p>
+    <h3 id="zhs-c7-6">7.6 敏感操作记录</h3>
+    <p>查看用户文件、停用或删除服务器、解除 IP 封锁、重设或变更用户数据等敏感操作，均应记录原因与时间。不得删除、窜改或规避面板活动日志及稽核记录。</p>
+    <h3 id="zhs-c7-7">7.7 禁止滥用权限</h3>
+    <p>不得为自己或他人设置后门、给予超额资源或特权、私下放行违规内容、利用管理员身分规避资源限制，或将节点资源挪作私人用途（包含挖矿）。管理员同样应遵守第 3 条及第 4 条之规定。</p>
+    <h3 id="zhs-c7-8">7.8 处置之公平性与证据</h3>
+    <p>处置用户应依本条款办理，并保存相关证据（截图、日志及时间记录），不得挟怨报复、偏袒友人或私下交易。与当事人有利害关系者应回避，改由其他管理员处理。</p>
+    <h3 id="zhs-c7-9">7.9 基础设施机密</h3>
+    <p>Wings Token、面板 API Key、数据库密码、<code>.env</code>、SSH 密钥、Cloudflare Tunnel 凭证及节点内网位置等，属机密信息，不得公开、截图外流或张贴于公开频道。怀疑外泄时，应立即更换。</p>
+    <h3 id="zhs-c7-10">7.10 远程访问与工作环境</h3>
+    <p>管理节点时，仅得使用经授权之方式（面板、SSH 密钥），不得自行架设未经授权之隧道、远程控制或代理工具。作业完成后应注销，且不得将用户数据下载或存放于个人设备、云端硬盘或通信软件。</p>
+    <h3 id="zhs-c7-11">7.11 资安事件通报</h3>
+    <p>发现入侵、数据外泄、凭证遗失或其他可疑行为时，应于 24 小时内通报 Wayne，并保留现场证据。隐匿不报者，视为重大违规。</p>
+    <h3 id="zhs-c7-12">7.12 保密义务与离任</h3>
+    <p>保密义务于任期届满后仍然有效。离任时应交还全部凭证、删除所持有之用户数据及截图，并确认账号权限已移除。</p>
+    <h3 id="zhs-c7-13">7.13 违反准则之后果</h3>
+    <p>违反本条准则者，立即撤销其管理权限；情节严重者，永久封禁并公开处分结果；造成用户或本服务损失者，应负赔偿责任，必要时并依法追究。</p>
+
+    <!-- 8 -->
+    <h2 id="zhs-s8">8. 隐私权与数据保护</h2>
+    <p class="lead">本章说明本服务如何搜集、使用及保护用户之个人数据。</p>
+
+    <h3 id="zhs-c8-1">8.1 搜集之数据</h3>
+    <p>本服务搜集之数据报含：Discord 账号信息（ID、名称、头像）、登录时之 IP 地址、邀请与点数记录、服务器资源使用量，以及面板与主机产生之活动与系统日志。本服务不搜集用户无需提供之数据。</p>
+    <h3 id="zhs-c8-2">8.2 搜集目的</h3>
+    <p>所搜集之数据仅用于提供服务、防止滥用与多重账号、处理违规与申诉、维护信息安全及统计资源使用情形，不用于广告或其他无关之用途。</p>
+    <h3 id="zhs-c8-3">8.3 不贩售、不公开</h3>
+    <p>本服务不会贩售、出租或公开用户之个人数据。除因法令要求、保护服务安全，或处理用户与管理员间之争议外，不会向第三方提供。</p>
+    <h3 id="zhs-c8-4">8.4 管理员查看文件之限制</h3>
+    <p>用户之服务器文件、控制台及数据库，缺省为私人。管理员仅得于第 7.2 条所列情形查看，并受第 7 条全部规范拘束。</p>
+    <h3 id="zhs-c8-5">8.5 保存期限</h3>
+    <p>活动及系统日志最长保存 90 日；账号删除或终止后，个人数据将于 30 日内清除。为防止遭封锁者重新注册，黑名单所需之最少识别数据（如 Discord ID、IP 地址）得长期保存。</p>
+    <h3 id="zhs-c8-6">8.6 用户之权利</h3>
+    <p>用户得随时联系管理员，请求查找、更正或删除属于其本人之个人数据；但因进行中之违规调查、资安事件或法令要求而须保留者，不在此限。</p>
+    <h3 id="zhs-c8-7">8.7 第三方服务之数据处理</h3>
+    <p>登录与通知须经由 Discord，连接亦可能经过 Cloudflare 等网络服务。该等第三方依其自身隐私政策处理数据，本服务无法控制。</p>
+    <h3 id="zhs-c8-8">8.8 用户之安全责任</h3>
+    <p>请为 Discord 及相关账号启用双重验证，勿与他人共用密码或 API Key，并定期检查面板之 SFTP 与 API 访问情形。管理员不会向用户索取密码或验证码；遇有此类要求，请立即回报。</p>
+    <h3 id="zhs-c8-9">8.9 隐私与安全问题回报</h3>
+    <p>发现隐私外泄、管理员违规查看数据或任何安全漏洞者，请立即于 Discord 通报管理员。善意回报漏洞者，不被追究责任；但禁止利用漏洞取得或破坏他人数据。</p>
+
+    <!-- 9 -->
+    <h2 id="zhs-s9">9. 违规处置</h2>
+    <p class="lead">用户违反本条款者，管理员得视情节轻重，采取下列处置之一项或数项。</p>
+
+    <h3 id="zhs-c9-1">9.1 处置方式</h3>
+    <ol>
+      <li>停用违规服务器（保留 24 小时供用户备份，逾期永久删除）；</li>
+      <li>限制或撤销账号权限；</li>
+      <li>删除违规服务器；</li>
+      <li>永久注销账号并列入黑名单。</li>
+    </ol>
+    <h3 id="zhs-c9-2">9.2 申诉</h3>
+    <p>用户如认为处置有误，得于收到通知后 7 日内联系管理员提出申诉。</p>
+    <h3 id="zhs-c9-3">9.3 紧急处置与调查</h3>
+    <ul>
+      <li>于维护、资安事件或紧急状况下，管理员得不经事前通知，立即处理。</li>
+      <li>调查违规或安全事件期间，管理员得暂时限制服务器与账号之功能。</li>
+      <li>处理争议时，得参考面板、主机及网络服务所产生之系统记录。</li>
+    </ul>
+    <h3 id="zhs-c9-4">9.4 终止后之限制</h3>
+    <p>账号遭终止后，不得以其他账号或其他方式规避处分并重新使用本服务。</p>
+    <h3 id="zhs-c9-5">9.5 对管理人员之不当行为</h3>
+    <ul>
+      <li>对管理员或工作人员恶意辱骂、骚扰或态度恶劣者，管理员得直接终止其账号。</li>
+      <li>对管理员或本服务威胁提告者，其账号将直接终止；如有争议，请先以沟通方式处理。</li>
+    </ul>
+    <h3 id="zhs-c9-6">9.6 管理员违规</h3>
+    <p>管理员违反第 7 条准则者，立即撤销其权限，并依第 7.13 条处理。</p>
+    <h3 id="zhs-c9-7">9.7 严重违规与累计加重</h3>
+    <p>严重违规（包含外泄他人隐私、入侵、攻击）者，得不经警告直接终止账号；同一人多次违规者，处分得累计加重。</p>
+    <h3 id="zhs-c9-8">9.8 处置通知</h3>
+    <p>处置用户时，原则上将通过 Discord 通知当事人。</p>
+
+    <!-- 10 -->
+    <h2 id="zhs-s10">10. 附则</h2>
+
+    <h3 id="zhs-c10-1">10.1 条款之修订</h3>
+    <p>本条款得随时修订。条款更新后，用户继续使用本服务，即视为接受新版条款。</p>
+    <h3 id="zhs-c10-2">10.2 解释权</h3>
+    <p>Wayne 保留本条款之最终解释权。</p>
+
+    <div class="doc-footer">最后更新于 <time datetime="2026-10-14">2026 年 10 月 14 日</time></div>
+  </main>
+
+  <aside class="aside" aria-label="本頁目錄" data-i18n-aria="onThisPage">
     <div class="aside-sticky">
-      <nav class="outline" id="outline" aria-label="本頁目錄">
+      <nav class="outline" id="outline" aria-label="本頁目錄" data-i18n-aria="onThisPage">
         <div class="outline-marker" id="outline-marker"></div>
-        <p class="outline-title">本頁目錄</p>
+        <p class="outline-title" data-i18n="onThisPage">本頁目錄</p>
         <ul id="outline-list"></ul>
       </nav>
-      <a class="to-top" href="#top">回到頂端</a>
+      <a class="to-top" href="#top" data-i18n="backToTop">回到頂端</a>
     </div>
   </aside>
 </div>
@@ -633,6 +1195,42 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
 (function () {
   var root = document.documentElement;
   var $ = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ---------- 多語言字串 ---------- */
+  var LANGS = ['zh-Hant', 'en', 'zh-Hans'];
+  var PFX = { 'zh-Hant': 'zht', 'en': 'en', 'zh-Hans': 'zhs' };
+  var I18N = {
+    'zh-Hant': {
+      title: 'Wayne Free Host 服務條款',
+      desc: 'Wayne Free Host（Wayhost）免費主機服務之使用條款、資源配額、禁止行為、隱私權與管理人員行為準則。',
+      terms: '服務條款', panel: '面板', home: 'Wayne Free Host 首頁', mainNav: '主要導覽',
+      toggleDark: '切換深色模式', openMenu: '開啟選單', language: '切換語言',
+      onThisPage: '本頁目錄', backToTop: '回到頂端',
+      anchor: '前往「{t}」'
+    },
+    'en': {
+      title: 'Wayne Free Host Terms of Service',
+      desc: 'Terms of Service for Wayne Free Host (Wayhost): resource quotas, prohibited conduct, privacy, and the administrator code of conduct.',
+      terms: 'Terms of Service', panel: 'Panel', home: 'Wayne Free Host home', mainNav: 'Main navigation',
+      toggleDark: 'Toggle dark mode', openMenu: 'Open menu', language: 'Change language',
+      onThisPage: 'On this page', backToTop: 'Back to top',
+      anchor: 'Permalink to "{t}"'
+    },
+    'zh-Hans': {
+      title: 'Wayne Free Host 服务条款',
+      desc: 'Wayne Free Host（Wayhost）免费主机服务的使用条款、资源配额、禁止行为、隐私权与管理人员行为准则。',
+      terms: '服务条款', panel: '面板', home: 'Wayne Free Host 首页', mainNav: '主导航',
+      toggleDark: '切换深色模式', openMenu: '打开菜单', language: '切换语言',
+      onThisPage: '本页目录', backToTop: '回到顶部',
+      anchor: '前往“{t}”'
+    }
+  };
+  var lang = root.getAttribute('data-ui');
+  if (LANGS.indexOf(lang) < 0) lang = 'zh-Hant';
+
+  var docs = {};
+  LANGS.forEach(function (l) { docs[l] = $('.doc[data-lang="' + l + '"]'); });
 
   /* ---------- 深色模式 ---------- */
   var toggle = $('#theme-toggle');
@@ -653,43 +1251,56 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
     });
   } catch (e) {}
 
-  /* ---------- 標題錨點 ---------- */
-  document.querySelectorAll('.doc h2[id], .doc h3[id]').forEach(function (h) {
-    var a = document.createElement('a');
-    a.className = 'header-anchor';
-    a.href = '#' + h.id;
-    a.setAttribute('aria-label', '前往「' + h.textContent + '」');
-    h.insertBefore(a, h.firstChild);
+  /* ---------- 標題錨點（每種語言各一份） ---------- */
+  LANGS.forEach(function (l) {
+    $$('h2[id], h3[id]', docs[l]).forEach(function (h) {
+      var a = document.createElement('a');
+      a.className = 'header-anchor';
+      a.href = '#' + h.id;
+      a.setAttribute('aria-label', I18N[l].anchor.replace('{t}', h.textContent));
+      h.insertBefore(a, h.firstChild);
+    });
   });
 
   /* ---------- 目錄 ---------- */
-  var heads = Array.prototype.slice.call(document.querySelectorAll('.doc h2[id]'));
   var outlineList = $('#outline-list');
   var localMenu = $('#local-menu');
-  function titleOf(h) { return h.textContent.replace(/^\s*#?\s*/, '').trim(); }
-  heads.forEach(function (h) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
-    a.href = '#' + h.id; a.textContent = titleOf(h);
-    li.appendChild(a); outlineList.appendChild(li);
-
-    var b = document.createElement('a');
-    b.href = '#' + h.id; b.textContent = titleOf(h);
-    b.addEventListener('click', closeLocal);
-    localMenu.appendChild(b);
-  });
-  var outlineLinks = Array.prototype.slice.call(outlineList.querySelectorAll('a'));
-  var localLinks = Array.prototype.slice.call(localMenu.querySelectorAll('a'));
   var marker = $('#outline-marker');
   var localLabel = $('#local-label');
+  var localBtn = $('#local-btn');
+  var heads = [], outlineLinks = [], localLinks = [], activeIdx = -1;
+
+  function titleOf(h) { return h.textContent.trim(); }
+  function closeLocal() { localMenu.hidden = true; localBtn.setAttribute('aria-expanded', 'false'); }
+
+  function buildOutline() {
+    heads = $$('h2[id]', docs[lang]);
+    outlineList.textContent = '';
+    localMenu.textContent = '';
+    heads.forEach(function (h) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#' + h.id; a.textContent = titleOf(h);
+      li.appendChild(a); outlineList.appendChild(li);
+
+      var b = document.createElement('a');
+      b.href = '#' + h.id; b.textContent = titleOf(h);
+      b.addEventListener('click', closeLocal);
+      localMenu.appendChild(b);
+    });
+    outlineLinks = $$('a', outlineList);
+    localLinks = $$('a', localMenu);
+  }
 
   function setActive(i) {
+    activeIdx = i;
     outlineLinks.forEach(function (a, k) { a.classList.toggle('active', k === i); });
     localLinks.forEach(function (a, k) { a.classList.toggle('active', k === i); });
-    localLabel.textContent = i >= 0 ? titleOf(heads[i]) : '本頁目錄';
-    if (i >= 0 && outlineLinks[i].offsetParent) {
+    localLabel.textContent = i >= 0 ? titleOf(heads[i]) : I18N[lang].onThisPage;
+    if (i >= 0 && outlineLinks[i] && outlineLinks[i].offsetParent) {
       var a = outlineLinks[i];
-      marker.style.top = (a.offsetTop + 32 + 4 + (a.offsetHeight - 18) / 2 - 4) + 'px';
+      /* offsetTop 已是相對於 .outline（含標題），不需再加標題高度 */
+      marker.style.top = (a.offsetTop + (a.offsetHeight - 18) / 2) + 'px';
       marker.style.opacity = '1';
     } else {
       marker.style.opacity = '0';
@@ -711,11 +1322,57 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
   }, { passive: true });
   window.addEventListener('resize', spy);
   window.addEventListener('load', spy);
-  spy();
+
+  /* ---------- 套用語言 ---------- */
+  var langItems = $$('.lang-menu button');
+  var panelUrl = '';
+  function applyLang(l) {
+    lang = l;
+    root.setAttribute('data-ui', l);
+    root.lang = l;
+    var t = I18N[l];
+    document.title = t.title;
+    var meta = $('meta[name="description"]');
+    if (meta) meta.setAttribute('content', t.desc);
+    $$('[data-i18n]').forEach(function (el) { el.textContent = t[el.getAttribute('data-i18n')]; });
+    $$('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t[el.getAttribute('data-i18n-aria')]); });
+    $$('[data-i18n-title]').forEach(function (el) { el.setAttribute('title', t[el.getAttribute('data-i18n-title')]); });
+    langItems.forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-lang') === l ? 'true' : 'false'); });
+    buildOutline();
+    spy();
+  }
+
+  function switchLang(l) {
+    if (l === lang || LANGS.indexOf(l) < 0) return;
+    var old = lang, idx = activeIdx;
+    applyLang(l);
+    try { localStorage.setItem('wayhost-lang', l); } catch (e) {}
+    /* 保留閱讀位置與網址中的錨點 */
+    try {
+      var cur = location.hash.slice(1);
+      if (cur && cur.indexOf(PFX[old] + '-') === 0) {
+        history.replaceState(null, '', '#' + PFX[l] + cur.slice(PFX[old].length));
+      }
+    } catch (e) {}
+    if (idx >= 0 && heads[idx]) heads[idx].scrollIntoView({ block: 'start', behavior: 'instant' });
+    else window.scrollTo(0, 0);
+    spy();
+  }
+
+  /* ---------- 語言選單 ---------- */
+  var langBtn = $('#lang-btn');
+  var langMenu = $('#lang-menu');
+  function closeLang() { langMenu.hidden = true; langBtn.setAttribute('aria-expanded', 'false'); }
+  langBtn.addEventListener('click', function () {
+    var open = langMenu.hidden;
+    langMenu.hidden = !open;
+    langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  langItems.forEach(function (b) {
+    b.addEventListener('click', function () { switchLang(b.getAttribute('data-lang')); closeLang(); langBtn.focus(); });
+  });
 
   /* ---------- 窄螢幕：本頁目錄與選單 ---------- */
-  var localBtn = $('#local-btn');
-  function closeLocal() { localMenu.hidden = true; localBtn.setAttribute('aria-expanded', 'false'); }
   localBtn.addEventListener('click', function () {
     var open = localMenu.hidden;
     localMenu.hidden = !open;
@@ -735,9 +1392,10 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
   document.addEventListener('click', function (e) {
     if (!localMenu.hidden && !e.target.closest('#local-nav')) closeLocal();
     if (!panel.hidden && !e.target.closest('#menu-panel') && !e.target.closest('#burger')) closeMenu();
+    if (!langMenu.hidden && !e.target.closest('.lang')) closeLang();
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closeLocal(); closeMenu(); }
+    if (e.key === 'Escape') { closeLocal(); closeMenu(); closeLang(); }
   });
   window.addEventListener('resize', function () {
     if (window.innerWidth >= 768) closeMenu();
@@ -746,11 +1404,12 @@ th { font-size: 14px; font-weight: 600; color: var(--c-text-2); background: var(
 
   /* ---------- 「面板」連結：請在此填入實際網址 ---------- */
   var PANEL_URL = 'https://panel.wayhost.cc.cd/';
-  if (PANEL_URL) {
-    document.querySelectorAll('#panel-link, .panel-link-m').forEach(function (a) { a.href = PANEL_URL; a.target = '_blank'; });
-  } else {
-    document.querySelectorAll('#panel-link, .panel-link-m').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
-  }
+  $$('#panel-link, .panel-link-m').forEach(function (a) {
+    if (PANEL_URL) { a.href = PANEL_URL; a.target = '_blank'; a.rel = 'noopener'; }
+    else a.addEventListener('click', function (e) { e.preventDefault(); });
+  });
+
+  applyLang(lang);
 })();
 </script>
 </body>
